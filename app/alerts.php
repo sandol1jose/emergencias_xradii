@@ -34,6 +34,14 @@
             echo "<script> alertsweetalert2('Error', 'El código es incorrecto', 'error'); </script>";
         }
 
+		if(strcmp($Alerta, 'RolIncorrecto') === 0){
+            echo "<script> alertsweetalert2('Error', 'Por favor elige un cargo', 'info'); </script>";
+        }
+		
+		if(strcmp($Alerta, 'Logout') === 0){
+            echo "<script> alertsweetalert2('Saliste de tu cuenta', '', 'success'); </script>";;
+        }
+
 		unset($_SESSION["Alerta"]);
 	}
 ?>

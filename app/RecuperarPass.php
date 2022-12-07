@@ -4,7 +4,7 @@ use PHPMailer\PHPMailer\PHPMailer;
 use PHPMailer\PHPMailer\Exception;
 include '../conexion.php';
 
-$_POST["Email"] = "sandol1jose@gmail.com";
+//$_POST["Email"] = "sandol1jose@gmail.com";
 $Email = $_POST["Email"];
 
 EnviarEmail($Email, $base_de_datos);

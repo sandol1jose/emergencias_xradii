@@ -4,6 +4,12 @@
 	include '../conexion.php';
 	//include 'EnviarCorreo.php';
 
+	if($_POST["rol"] == 0){
+		$_SESSION["Alerta"] = "RolIncorrecto";
+		header('Location: ../Login/registro.php'); //envia a la página de inicio.
+		exit();
+	}
+
 	$Nombres = $_POST["nombres"];
     $Apellidos = $_POST["apellidos"];
     $Rol = $_POST["rol"];

@@ -1,0 +1,262 @@
+*{
+    font-size: 12px;
+    /*font-size: -350%;*/
+    font-family: "Inter", sans-serif;
+}
+
+
+
+.BotonGeneral{
+    background: #1F3DDE;
+    height: 40px;
+    width: 100px;
+    border: none;
+    outline: none;
+    padding: 0px;
+    cursor: pointer;
+    border-radius: 30px;
+
+    color: white;
+    font-style: normal;
+    font-weight: 500;
+    font-size: 14px;
+}
+
+.BotonGeneral:hover{
+    background: #2E7DF4;
+    transform: scale(0.98, 0.98);
+}
+
+.BotonGeneral:disabled{
+    background: gray;
+}
+
+
+.btnEdit{
+    background: #FFE600;
+    background-image: url('../imagenes/clarity_pencil-solid.png');
+    background-size: 18px;
+    background-repeat: no-repeat;
+    background-position: center;
+
+    height: 22px;
+    width: 30px;
+    border: none;
+    outline: none;
+    padding: 0px;
+    cursor: pointer;
+    border-radius: 30px;
+
+    color: white;
+    font-style: normal;
+    font-weight: 500;
+    font-size: 14px;
+}
+
+.btnEdit:hover{
+    background: #ffeb37;
+    transform: scale(0.98, 0.98);
+
+    background-image: url('../imagenes/clarity_pencil-solid.png');
+    background-size: 18px;
+    background-repeat: no-repeat;
+    background-position: center;
+}
+
+.btnEdit > img{
+    height: 18px;
+}
+
+.btnDel{
+    background: #ff0000;
+    background-image: url('../imagenes/ph_trash-fill-white.png');
+    background-size: 18px;
+    background-repeat: no-repeat;
+    background-position: center;
+    height: 22px;
+    width: 30px;
+    border: none;
+    outline: none;
+    padding: 0px;
+    cursor: pointer;
+    border-radius: 30px;
+
+    color: white;
+    font-style: normal;
+    font-weight: 500;
+    font-size: 14px;
+}
+
+.btnDel:hover{
+    background: #ff3434;
+    transform: scale(0.98, 0.98);
+
+    background-image: url('../imagenes/ph_trash-fill-white.png');
+    background-size: 18px;
+    background-repeat: no-repeat;
+    background-position: center;
+}
+
+.btnDel > img{
+    height: 18px;
+}
+
+.btnDel:disabled{
+    background: #575757;
+    background-image: url('../imagenes/ph_trash-fill-white.png');
+    background-size: 18px;
+    background-repeat: no-repeat;
+    background-position: center;
+}
+
+.btnView{
+    background: #1F3DDE;
+    background-image: url('../imagenes/carbon_view-filled.png');
+    background-size: 18px;
+    background-repeat: no-repeat;
+    background-position: center;
+    height: 22px;
+    width: 30px;
+    border: none;
+    outline: none;
+    padding: 0px;
+    margin: 0px;
+    cursor: pointer;
+    border-radius: 30px;
+
+    color: white;
+    font-style: normal;
+    font-weight: 500;
+    font-size: 14px;
+}
+
+.btnView:hover{
+    background: #4b65f7;
+    transform: scale(0.98, 0.98);
+    background-image: url('../imagenes/carbon_view-filled.png');
+    background-size: 18px;
+    background-repeat: no-repeat;
+    background-position: center;
+}
+
+.btnView > img{
+    height: 18px;
+}
+
+
+input{
+    background-color: none;
+    /*height: 39px;*/
+    height: 100%;
+    outline: none;
+    border: 2px solid #BBBBBB;
+    padding-left: 15px;
+    padding-right: 15px;
+    border-radius: 30px;
+    user-select: none;
+}
+
+input[type='time']{
+    padding-right: 5px;
+}
+
+input:focus{
+    border: 2px solid #575757;
+}
+
+textarea{
+    background-color: none;
+    height: 80px;
+    outline: none;
+    border: 2px solid #BBBBBB;
+    padding: 15px;
+    border-radius: 20px;
+    user-select: none;
+    resize: none;
+}
+
+textarea:focus{
+    border: 2px solid #575757;
+}
+
+
+select{
+    background-color: none;
+    /*height: 39px;*/
+    height: 100%;
+    outline: none;
+    border: 2px solid #BBBBBB;
+    padding-left: 15px;
+    padding-right: 15px;
+    border-radius: 30px;
+    user-select: none;
+}
+
+
+
+/* scroll bar */
+/*textarea::-webkit-scrollbar:vertical {
+    width:10px;
+}
+
+textarea::-webkit-scrollbar-button:increment,textarea::-webkit-scrollbar-button {
+    display: none;
+} 
+
+textarea::-webkit-scrollbar:horizontal {
+    height: 20px;
+}
+
+textarea::-webkit-scrollbar-thumb {
+    background-color: #797979;
+    border-radius: 20px;
+    border: 2px solid #f1f2f3;
+}
+
+textarea::-webkit-scrollbar-track {
+    border-radius: 10px;  
+}*/
+
+
+
+table{
+    width: 100%;
+    border-collapse: collapse;
+    max-width: 100%;
+    table-layout: fixed;
+}
+
+tr {
+    width: 50px;
+    word-wrap: break-word;
+}
+
+td{
+    height: 30px;
+    padding: 5px;
+    text-align: center;
+    align-items: center;
+}
+
+thead > tr{
+    height: 30px;
+}
+
+thead{
+    background-color: #1F3DDE;
+    color: white;
+}
+
+
+
+/*Esto es para los scrolls*/
+::-webkit-scrollbar-thumb {
+    background-color: gray;
+    border-radius: 0px;
+    display: none;
+}
+::-webkit-scrollbar {
+    width: 8px;
+    background-color: #1F3DDE;
+    display: none;
+}

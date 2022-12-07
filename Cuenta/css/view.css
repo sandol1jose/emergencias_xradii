@@ -1,0 +1,225 @@
+
+.contenedor {
+    grid-template-columns: 130px 130px 450px auto;
+    grid-template-rows: 10px 45px 45px 45px;
+}
+
+
+.DivImag_individual{
+    height: 60px;
+    width: 60px;
+    margin-right: 0px;
+    border: 2px solid #BBBBBB;
+    border-radius: 10px;
+    cursor: pointer;
+    position: relative;
+  }
+  
+  .DivImag_individual:hover{
+    border: 2px solid #575757;
+    transform: scale(0.95);
+  }
+
+
+.DivImag_individual img{
+    border-radius: 10px;
+}
+
+  
+
+
+.estilo7{
+    display: grid;
+    justify-content: start;
+    grid-template-rows: auto auto;
+    grid-auto-flow: column;
+
+    column-gap: 5px;
+
+    overflow-x: scroll;
+    overflow-y: hidden;
+}
+
+/*Esto es para los scrolls*/
+div::-webkit-scrollbar-thumb {
+    background-color: gray;
+    border-radius: 5px;
+    
+    display: block;
+}
+div::-webkit-scrollbar {
+    width: 5px;
+    height: 5px;
+    background-color: transparent;
+    display: block;
+}
+
+
+
+
+
+/* DIV DE DETALLES Y COMENTARIOS */
+.ContenedorBase2{
+    background-color: none;
+    display: flex;  
+}
+
+.divdetalles{
+    height: 100%;
+    width: 25%;
+    background-color: none;
+}
+
+    .detalles{
+        display: grid;
+        grid-template-rows: 30px auto;
+        height: 65%;
+        background-color: none;
+        padding-left: 10px;
+        padding-right: 10px;
+    }
+
+    .det_title{
+        width: 100%;
+        background-color: none;
+        display: flex;
+        align-items: center;
+    }
+
+    .det_tabla{
+        background-color: none;
+        display: grid;
+        grid-template-rows: auto;
+        padding: 10px;
+        padding-left: 0px;
+        padding-top: 0px;
+    }
+
+    .det_tabla > table {
+        border-collapse: collapse;
+        border-radius: 20px;
+        border-style: hidden; /* hide standard table (collapsed) border */
+        box-shadow: 0 0 0 1px #BBBBBB; /* this draws the table border  */
+    }
+
+    td, th{
+        text-align: left;
+        padding-left: 18px;
+    }
+
+    th{
+        width: 40%;
+        background-color: #1F3DDE;
+        color: white;
+
+    }
+
+    table tr:nth-child(1) > th{
+        border-collapse: collapse;
+        border-radius: 20px 0px 0px 0px;
+    }
+
+    table tr:last-child > th{
+        border-collapse: collapse;
+        border-radius: 0px 0px 0px 20px;
+    }
+
+
+
+
+.divcomentarios{
+    height: 100%;
+    width: 75%;
+    background-color: none;
+    display: grid;
+    grid-template-rows: 30px auto;
+    padding-left: 10px;
+    padding-right: 10px;
+    
+}
+
+    .divcomentarios > .div_tabla {
+        background-color: none;
+        padding-bottom: 20px;
+        
+    }
+
+    .div_Contorno{
+        display: grid;
+        grid-template-rows: auto 50px;
+        height: 100%;
+        border: 1px solid #BBBBBB;
+        border-radius: 25px;
+    }
+
+    .div_Contorno > .arriba{
+        max-height: 300px;
+        background-color: transparent;
+        border-radius: 25px 25px 0px 0px;
+        padding: 10px;
+        overflow-y: scroll;
+        overflow-x: hidden;
+    }
+
+    .arriba td{
+        border: 0;
+        word-wrap: break-word;
+    }
+
+    .arriba  td:nth-child(1){
+
+    }
+
+    .arriba td:last-child{
+        width: 10%;
+        text-align: right;
+    }
+
+    .span_fecha{
+        font-size: 11px;
+    }
+
+
+
+    .div_Contorno > .abajo{
+        background-color: #1F3DDE;
+        border-radius: 0px 0px 25px 25px;
+        display: flex;
+        justify-content: flex-end;
+        align-items: center;
+        padding-right: 10px;
+    }
+
+    .abajo > .BotonGeneral{
+        width: 180px;
+        background-color: white;
+        color: #2E2E2E;
+    }
+
+    .abajo > .BotonGeneral{
+        width: 180px;
+        background-color: white;
+        color: #2E2E2E;
+    }
+
+
+
+
+
+
+    /*Estilos del modal */
+    .swal2-input{
+        margin-top: 5px;
+        margin-bottom: 5px;
+    }
+
+    .txtComent{
+        height: 150px;
+        padding: 10px;
+    }
+
+    .swal2-shown, .swal2-height-auto{
+        padding: 0px !important;
+        margin: 0px !important;
+        border: 0px !important;
+    }

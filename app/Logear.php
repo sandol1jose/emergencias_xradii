@@ -3,8 +3,6 @@
 	include_once "../conexion.php";
 	include_once "../Sesiones/sesCliente.php";
 
-
-
 	$correo = $_POST["correo"];
 	$password = $_POST["pass"];
 

@@ -19,8 +19,14 @@ session_start();
 		
 		<input class="InputGeneral" type="text" id="apellidos" name="apellidos" placeholder="Apellidos" utocomplete="off" required><br>
 		
-		<input class="InputGeneral" type="text" id="rol" name="rol" placeholder="¿Cuál es tu cargo?" autocomplete="off"><br>
-		
+		<select name="rol" id="rol">
+			<option value="0" selected>¿Cuál es tu cargo?</option>
+			<option value="1">Técnico</option>
+			<option value="2">Administrador</option>
+			<option value="3">Radiólogo</option>
+			<option value="4">Piloto</option>
+		</select><br>
+
 		<input class="InputGeneral" placeholder="Correo" type="text" name="correo" id="correo" autocomplete="off" spellcheck="false" required><br>
 		
 		<input class="InputGeneral" onkeyup="verificarContrasenia();" placeholder="Contraseña nueva" type="password" name="pass" id="pass" autocomplete="off" spellcheck="false" required><br>
