@@ -13,6 +13,7 @@ if(!isset($_SESSION['Usuario'])){
 $Estado = NULL;
 $Parametros_Llenos = 0;
 $Retorno = NULL;
+$Cantidad_Campos = 8; //Para saber cuantos campos debe de llenar
 
 $Inicio = $_POST["Inicio"];
 $Fin = $_POST["Fin"];
@@ -26,6 +27,7 @@ $Comentarios = $_POST["Comentarios"];
 $IDEmergencia = $_POST["IDEmergencia"];
 $fechaActual = date('Y-m-d');
 $IDUsuario = $_SESSION['Usuario']['IDUsuario'];
+$Rol = $_SESSION['Usuario']['Rol'];
 
 //Verificando si algunos parametros están vacios / y de ésta manera saber que estado tendrá la Emergencia
 $Inicio = VerificarParametros($Inicio, true);
@@ -38,7 +40,12 @@ $Edad = VerificarParametros($Edad, true);
 $Estudios = VerificarParametros($Estudios, true);
 $Comentarios = VerificarParametros($Comentarios, false);
 
-if($Parametros_Llenos === 8){
+//Si el rol es (4) Piloto, entonces solo debe de llenar 4 campos
+if($Rol == 4){
+    $Cantidad_Campos = 5;
+}
+
+if($Parametros_Llenos === $Cantidad_Campos){
     $Estado = 2;
 }else{
     $Estado = 1;

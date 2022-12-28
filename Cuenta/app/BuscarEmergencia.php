@@ -6,20 +6,14 @@ include $ruta;
 
 $Retorno = NULL;
 
-/*
-$id = $_POST["id"];
-if(isset($_POST["IDUsuario"])){
-    $IDUsuario = $_POST["IDUsuario"];
-}else{
-    $IDUsuario = $_SESSION['Usuario']['IDUsuario'];
-}*/
-
 if(!isset($_POST["id"])){
+    //Se está buscando en view.php
     $IDUsuario = $_SESSION["IDUsuario"];
     $id = $_SESSION["IDEmergencia"];
+    $Rol = $_SESSION['Usuario']["Rol"];
 }else{
-    $id = $_POST["id"];
     $IDUsuario = $_SESSION['Usuario']['IDUsuario'];
+    $id = $_POST["id"];
 }
 
 
@@ -28,7 +22,7 @@ unset($_SESSION['IMAGENES_PRODUCTO']);
 unset($_SESSION['IMAGENES_PRODUCTO_ENDB']); 
 
 try {
-    $sql = "SELECT  e.*, c.comentario, e2.nombre_estado FROM emergencia e
+    $sql = "SELECT  e.*, c.comentario, e2.nombre_estado, e2.id idEstado FROM emergencia e
     LEFT JOIN comentario c ON e.id = c.f_emergencia
     JOIN estado e2 ON e2.id = e.f_estado 
     WHERE e.id = ".$id." AND e.f_usuario = ".$IDUsuario." ORDER BY c.id ASC LIMIT 1";
@@ -37,6 +31,11 @@ try {
     $registro = $sentencia->fetchAll(PDO::FETCH_ASSOC);
     if(count($registro) == 1){
         //Se encontro la emergencia
+        
+        /*if(!isset($_POST["id"])){
+            //Se está buscando en view.php
+            $_SESSION['EMERGENCIA'] = $registro[0];
+        }*/
 
         //Buscamos las imagenes
         $sql = "SELECT id, ruta FROM imagen i WHERE i.f_emergencia = ".$id."";
@@ -53,6 +52,10 @@ try {
             $Retorno["Imagenes2"] = $_SESSION['IMAGENES_PRODUCTO_ENDB'];
         }else{
             $Retorno["Imagenes"] = false;
+        }
+        if(!isset($_POST["id"])){
+            //Se está buscando en view.php
+            $Retorno["RolUsuario"] = $Rol;
         }
         $Retorno["Registros"] = $registro;
         $Retorno["Retorno"] = 1;

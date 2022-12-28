@@ -39,8 +39,13 @@
         }
 		
 		if(strcmp($Alerta, 'Logout') === 0){
-            echo "<script> alertsweetalert2('Saliste de tu cuenta', '', 'success'); </script>";;
+            echo "<script> alertsweetalert2('Saliste de tu cuenta', '', 'success'); </script>";
         }
+		
+		if(strcmp($Alerta, 'NoAutorizado') === 0){
+            echo "<script> alertsweetalert2('Error', 'Aún no estás autoriado para ingresar', 'info'); </script>";
+        }
+		
 
 		unset($_SESSION["Alerta"]);
 	}

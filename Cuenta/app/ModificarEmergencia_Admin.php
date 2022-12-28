@@ -23,10 +23,35 @@ $Honorarios = $_POST["Honorarios"];
 $Paciente = $_POST["Paciente"];
 $Edad = $_POST["Edad"];
 $Estudios = $_POST["Estudios"];
-$Comentarios = $_POST["Comentarios"];
-$fechaActual = date('Y-m-d');
-$IDUsuario = $_SESSION['Usuario']['IDUsuario'];
-$Rol = $_SESSION['Usuario']['Rol'];
+$IDEmergencia = $_SESSION['IDEmergencia'];
+$Rol = $_SESSION['Rol_Usuario_Emergencia'];//Variable de Session que almacena el Rol del usuario propietario de la Emergencia
+
+//Para aprovar o revisar
+$CheckBox = $_POST["CheckBox"];
+$CheckBox_val = $_POST["CheckBox_val"];
+
+//Para Mandar a revisión
+$CheckBox2 = $_POST["CheckBox2"];
+$CheckBox_val2 = $_POST["CheckBox_val2"];
+
+if($CheckBox == 'true'){
+    switch ($CheckBox_val) {
+        case 'Revision':
+            $Estado = 3;
+            break;
+        case 'Aprobada':
+            $Estado = 4;
+            break;
+    }
+}else if($CheckBox2 == 'true'){
+    switch ($CheckBox_val2) {
+        case 'Rechazar':
+            $Estado = 2;
+            break;
+    }
+}else{
+    $Estado = NULL;
+}
 
 //Verificando si algunos parametros están vacios / y de ésta manera saber que estado tendrá la Emergencia
 $Inicio = VerificarParametros($Inicio, true);
@@ -37,73 +62,31 @@ $Honorarios = VerificarParametros($Honorarios, true);
 $Paciente = VerificarParametros($Paciente, true);
 $Edad = VerificarParametros($Edad, true);
 $Estudios = VerificarParametros($Estudios, true);
-$Comentarios = VerificarParametros($Comentarios, false);
 
-
-//Si el rol es (4) Piloto, entonces solo debe de llenar
+//Si el rol es (4) Piloto, entonces solo debe de llenar 4 campos
 if($Rol == 4){
     $Cantidad_Campos = 5;
 }
 
-if($Parametros_Llenos === $Cantidad_Campos){
-    $Estado = 2;
-}else{
-    $Estado = 1;
-}
-
-
-//Que al menos un parámetro esté lleno
-if($Parametros_Llenos > 0){
+//Que al menos 8 parámetro esté lleno
+if($Parametros_Llenos == $Cantidad_Campos){
     try {
-        $sentencia = $base_de_datos->prepare("CALL NuevaEmergencia(?,?,?,?,?,?,?,?,?,?,?,?,@IDEmergencia);");
+        $sentencia = $base_de_datos->prepare("CALL UpdateEmergencia_Admin(?,?,?,?,?,?,?,?,?,?);");
         $resultado = $sentencia->execute([
-                $fechaActual, 
                 $Inicio, 
                 $Fin, 
                 $Direccion, 
-                $Precio,
-                $Honorarios, 
-                $Paciente, 
-                $Edad, 
+                $Precio, 
+                $Honorarios,
+                $Paciente,
+                $Edad,
                 $Estudios, 
-                $Comentarios,
-                $IDUsuario,
+                $IDEmergencia,
                 $Estado
         ]);
-    
-        //Obteniendo el ID de la Emergencia
-        $r = $base_de_datos->query('SELECT @IDEmergencia')->fetch();
-        $IDEmergencia = $r['@IDEmergencia'];
-    
-        //Guardando las imagenes (Si hubieran)
-        if(isset($_SESSION["IMAGENES_PRODUCTO"])){
-            $Array_Imagenes = $_SESSION["IMAGENES_PRODUCTO"];
-            foreach ($Array_Imagenes as $value) {
-                $Ruta = $value;
-                $Ruta_Renombrada = "E" . $IDEmergencia . "_" . $value;
-                $sentencia = $base_de_datos->prepare("CALL NuevaImagen(?,?);");
-                $resultado = $sentencia->execute([$Ruta_Renombrada, $IDEmergencia]);
-    
-                //Moviendo la imagen a la carpeta
-                $currentLocation = '../../ImagenesDB/Radiografias/temp/' . $Ruta;
-                $newLocation = '../../ImagenesDB/Radiografias/' . $Ruta_Renombrada;
-                if(is_file($currentLocation)){
-                    rename($currentLocation, $newLocation);
-                }
-            }
-            //Eliminamos las imagenes de la variable Sesion
-            unset($_SESSION["IMAGENES_PRODUCTO"]);
-        }
-    
+
         if($resultado == true){
             //SE AGREGO CORRECTAMENTE LA EMERGENCIA
-    
-            //Consultamos las emergencias en estado "Incompleta"
-            $registros = ConsultarEmergencias($IDUsuario, 1);
-            if($registros != false){
-                $Arrar_Retorno["Registros"] = $registros;
-            }
-    
             $Retorno = '1';
         }else{
             //Ocurrio un error al almacenar en la base de datos

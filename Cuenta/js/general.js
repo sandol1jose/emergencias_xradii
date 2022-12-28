@@ -106,6 +106,8 @@ function EliminarEmergencia(id, estado, tipo) {
             } else if (json['Retorno'] == '0') {
                 //console.log("Ocurrio un error al guardar los datos");
                 alertsweetalert2('Error', 'Ocurrió un error al almacenar los datos', 'error');
+            }else if(json['Retorno'] == '2'){
+                alertsweetalert2('Acción no permitida', 'Solo el propietario puede eliminar la emergencia', 'info');
             } else {
                 $Mensaje = json['Error']['errorInfo'][2];
                 alertsweetalert2('Error', "Ocurrio un error, no se puede realizar la accion", 'error');

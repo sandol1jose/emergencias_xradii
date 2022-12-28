@@ -6,8 +6,13 @@ if (session_status() == PHP_SESSION_NONE) {
 if(isset($_POST["desde"]) && isset($_POST["hasta"]) && isset($_POST["estado"])){
     if($_POST["desde"] != "" && $_POST["hasta"] != ""){
         $Filtro = ["Desde" => $_POST["desde"], "Hasta" => $_POST["hasta"], "estado" => $_POST["estado"]];
-        $IDUsuario = $_SESSION['Usuario']['IDUsuario'];
-        echo json_encode(ConsultarEmergencias($IDUsuario, 2, $Filtro));
+
+        if(!isset($_SESSION['UsuarioConsulta'])){
+            $UsuarioConsulta = $_SESSION['Usuario']['IDUsuario'];
+        }else{
+            $UsuarioConsulta = $_SESSION['UsuarioConsulta'];
+        }
+        echo json_encode(ConsultarEmergencias($UsuarioConsulta, 2, $Filtro));
     }else{
         echo "0"; //Campo de fechas vacios
     }

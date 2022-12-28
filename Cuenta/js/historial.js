@@ -48,8 +48,11 @@ function PintarTabla(json) {
         var Bonificacion = 0.00
 
         if(precio == null){
-            precio = "";
-        }else{
+            //precio = "";
+            precio = 0.00;
+        }
+        
+        
             Bonificacion = honorarios - hora_extra;
             Bonificacion = Number(Bonificacion.toFixed(2));
 
@@ -65,7 +68,7 @@ function PintarTabla(json) {
 
             SUMBonif = SUMBonif + Bonificacion;
             SUMBonif = Number(SUMBonif.toFixed(2));
-        }
+        
 
         /*Calculando las horas aproximadas*/
         var horas = CalcularHoras(RegistroIndividual['fecha'], RegistroIndividual['inicio'], RegistroIndividual['fin']);

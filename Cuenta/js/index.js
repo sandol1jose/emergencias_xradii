@@ -21,9 +21,14 @@ function BuscarArchivo(idFileImagen) {
 }
 
 //Cuando el archivo File cambie entonces se realiza ésta accion
-document.getElementById('Input_File').addEventListener('change', (e) => {
-    ProcesarImagen('Input_File', 'img', e);
-});
+try {
+    document.getElementById('Input_File').addEventListener('change', (e) => {
+        ProcesarImagen('Input_File', 'img', e);
+    });
+} catch (error) {
+    console.log(error);
+}
+
 
 //COMPRIMIR IMAGENES ANTES DE SUBIR
 function ProcesarImagen(NameInputFile, NameImage, e) {
@@ -196,15 +201,21 @@ function GuardarDatos() {
 
 
 //Guardando datos de la emergencia
-function NuevaEmergencia() {
+function NuevaEmergencia(){
     var Inicio = document.getElementById("Inicio").value;
     var Fin = document.getElementById("Fin").value;
     var Direccion = document.getElementById("Direccion").value;
-    var Precio = document.getElementById("Precio").value;
     var Honorarios = document.getElementById("Honorarios").value;
-    var Paciente = document.getElementById("Paciente").value;
-    var Edad = document.getElementById("Edad").value;
-    var Estudios = document.getElementById("text-Estudios").value;
+
+    var Precio = document.getElementById("Precio");
+    Precio = Precio ? Precio.value : ""; //Esto es un if con else
+    var Paciente = document.getElementById("Paciente");
+    Paciente = Paciente ? Paciente.value : ""; //Esto es un if con else
+    var Edad = document.getElementById("Edad");
+    Edad = Edad ? Edad.value : ""; //Esto es un if con else
+    var Estudios = document.getElementById("text-Estudios");
+    Estudios = Estudios ? Estudios.value : ""; //Esto es un if con else
+
     var Comentarios = document.getElementById("text-Comentarios").value;
 
     $.ajax({
@@ -238,11 +249,21 @@ function NuevaEmergencia() {
                 document.getElementById("Inicio").value = "";
                 document.getElementById("Fin").value = "";
                 document.getElementById("Direccion").value = "";
-                document.getElementById("Precio").value = "";
+                document.getElementById("Honorarios").value = "";
+                var Precio = document.getElementById("Precio");
+                if(Precio) Precio.value = "";
+                var Paciente = document.getElementById("Paciente");
+                if(Paciente) Paciente.value = "";
+                var Edad = document.getElementById("Edad");
+                if(Edad) Edad.value = "";
+                var Estudios = document.getElementById("text-Estudios");
+                if(Estudios) Estudios.value = "";
+                /*
                 document.getElementById("Honorarios").value = "";
                 document.getElementById("Paciente").value = "";
                 document.getElementById("Edad").value = "";
                 document.getElementById("text-Estudios").value = "";
+                */
                 document.getElementById("text-Comentarios").value = "";
                 //Limpiamos las imagenes ya se elimino la sesion en GuardarRegistro.php
                 ConsultandoImagenes();
@@ -366,11 +387,24 @@ function BuscarEmergencia(id) {
                 document.getElementById("Inicio").value = $Registro['inicio'];
                 document.getElementById("Fin").value = $Registro['fin'];
                 document.getElementById("Direccion").value = $Registro['direccion'];
-                document.getElementById("Precio").value = $Registro['precio'];
+                document.getElementById("Honorarios").value = $Registro['honorarios'];
+
+                var Precio = document.getElementById("Precio");
+                if(Precio) Precio.value = $Registro['precio'];
+                var Paciente = document.getElementById("Paciente");
+                if(Paciente) Paciente.value = $Registro['paciente'];
+                var Edad = document.getElementById("Edad");
+                if(Edad) Edad.value = $Registro['edad'];
+                var Estudios = document.getElementById("text-Estudios");
+                if(Estudios) Estudios.value = $Registro['estudios'];
+
+                /*
                 document.getElementById("Honorarios").value = $Registro['honorarios'];
                 document.getElementById("Paciente").value = $Registro['paciente'];
                 document.getElementById("Edad").value = $Registro['edad'];
-                document.getElementById("text-Estudios").value = $Registro['estudios'];
+                document.getElementById("text-Estudios").value = $Registro['estudios'];*/
+
+
                 document.getElementById("text-Comentarios").value = $Registro['comentario'];
                 document.getElementById("id-Emergencia").value = id;
 
@@ -401,11 +435,23 @@ function ModificarEmergencia() {
     var Inicio = document.getElementById("Inicio").value;
     var Fin = document.getElementById("Fin").value;
     var Direccion = document.getElementById("Direccion").value;
-    var Precio = document.getElementById("Precio").value;
+    var Honorarios = document.getElementById("Honorarios").value;
+
+    var Precio = document.getElementById("Precio");
+    Precio = Precio ? Precio.value : ""; //Esto es un if con else
+    var Paciente = document.getElementById("Paciente");
+    Paciente = Paciente ? Paciente.value : ""; //Esto es un if con else
+    var Edad = document.getElementById("Edad");
+    Edad = Edad ? Edad.value : ""; //Esto es un if con else
+    var Estudios = document.getElementById("text-Estudios");
+    Estudios = Estudios ? Estudios.value : ""; //Esto es un if con else
+    /*
     var Honorarios = document.getElementById("Honorarios").value;
     var Paciente = document.getElementById("Paciente").value;
     var Edad = document.getElementById("Edad").value;
     var Estudios = document.getElementById("text-Estudios").value;
+*/
+
     var Comentarios = document.getElementById("text-Comentarios").value;
     var IDEmergencia = document.getElementById("id-Emergencia").value;
     document.getElementById("id-Emergencia").value = ""; //Limpiamos el id-Emergencia
@@ -442,11 +488,24 @@ function ModificarEmergencia() {
                 document.getElementById("Inicio").value = "";
                 document.getElementById("Fin").value = "";
                 document.getElementById("Direccion").value = "";
-                document.getElementById("Precio").value = "";
+                document.getElementById("Honorarios").value = "";
+
+                var Precio = document.getElementById("Precio");
+                if(Precio) Precio.value = "";
+                var Paciente = document.getElementById("Paciente");
+                if(Paciente) Paciente.value = "";
+                var Edad = document.getElementById("Edad");
+                if(Edad) Edad.value = "";
+                var Estudios = document.getElementById("text-Estudios");
+                if(Estudios) Estudios.value = "";
+
+                /*
                 document.getElementById("Honorarios").value = "";
                 document.getElementById("Paciente").value = "";
                 document.getElementById("Edad").value = "";
                 document.getElementById("text-Estudios").value = "";
+                */
+
                 document.getElementById("text-Comentarios").value = "";
                 //Limpiamos las imagenes ya se elimino la sesion en ModificarEmergencia.php
                 ConsultandoImagenes();

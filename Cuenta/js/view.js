@@ -4,8 +4,8 @@ const GIDUsuario = null;
 */
 
 
-BuscarEmergencia();
-function BuscarEmergencia(){
+BuscarEmergencia(true);
+function BuscarEmergencia(ActualizarImagenes){
     $.ajax({
         type: "POST",
         url: "app/BuscarEmergencia.php",
@@ -26,11 +26,21 @@ function BuscarEmergencia(){
                 document.getElementById("Inicio").value = Registro['inicio'];
                 document.getElementById("Fin").value = Registro['fin'];
                 document.getElementById("Direccion").value = Registro['direccion'];
-                document.getElementById("Precio").value = Registro['precio'];
                 document.getElementById("Honorarios").value = Registro['honorarios'];
+
+                var Precio = document.getElementById("Precio");
+                if(Precio) Precio.value = Registro['precio'];
+                var Paciente = document.getElementById("Paciente");
+                if(Paciente) Paciente.value = Registro['paciente'];
+                var Edad = document.getElementById("Edad");
+                if(Edad) Edad.value = Registro['edad'];
+                var Estudios = document.getElementById("text-Estudios");
+                if(Estudios) Estudios.value = Registro['estudios'];
+
+                /*
                 document.getElementById("Paciente").value = Registro['paciente'];
                 document.getElementById("Edad").value = Registro['edad'];
-                document.getElementById("text-Estudios").value = Registro['estudios'];
+                document.getElementById("text-Estudios").value = Registro['estudios'];*/
                 
                 document.getElementById("contenido_tabla").innerHTML = "";
                 var fecha = FormatearFecha(Registro["fecha"]);
@@ -47,11 +57,13 @@ function BuscarEmergencia(){
                 var Bonificacion = 0.00
 
                 if(precio == null){
-                    precio = "";
-                }else{
-                    Bonificacion = honorarios - hora_extra;
-                    Bonificacion = Number(Bonificacion.toFixed(2));
+                    //precio = "";
+                    precio = 0.00;
                 }
+
+                Bonificacion = honorarios - hora_extra;
+                Bonificacion = Number(Bonificacion.toFixed(2));
+                
 
                 //Pintamos la tabla de detalles
                 PintarTabla_Detalles("Fecha", fecha);
@@ -62,12 +74,26 @@ function BuscarEmergencia(){
                 PintarTabla_Detalles("Bonificacion", "Q " + Bonificacion);
                 PintarTabla_Detalles("Estado", Registro["nombre_estado"]);
 
-                if (json['Imagenes'] == true) {
-                    PintarImagenes(json['Imagenes2']);
+                if(ActualizarImagenes == true){
+                    if (json['Imagenes'] == true) {
+                        PintarImagenes(json['Imagenes2']);
+                    }
+
+                    //Ahora consultamos todos los comentarios
+                    ConsultarComentarios();
                 }
 
-                //Ahora consultamos todos los comentarios
-                ConsultarComentarios();
+
+                
+                if(ActualizarImagenes == false){
+                    //Verifiacmos si es administrador
+                    document.getElementById("detalles_botones").innerHTML = "";
+                    if(json['RolUsuario'] == 2 && Registro["idEstado"] == 2){
+                        var botones = `<label><input type="checkbox" id="cbox1" value="Revision"> Marcar como revisada</label>`;
+                        botones = botones + `<button class="BotonGeneral" onclick="GuardarCambios();">Guardar</button>`;
+                        $("#detalles_botones").append(botones);
+                    }
+                }
 
             } else if (json['Retorno'] == '0') {
                 //console.log("Ocurrio un error al guardar los datos");
@@ -248,3 +274,99 @@ function GuardarComentario(motivo, comentario) {
     }
 }
 
+
+function GuardarCambios(rol){
+    var Inicio = document.getElementById("Inicio").value;
+    var Fin = document.getElementById("Fin").value;
+    var Direccion = document.getElementById("Direccion").value;
+    var Honorarios = document.getElementById("Honorarios").value;
+
+    var Precio = document.getElementById("Precio");
+    Precio = Precio ? Precio.value : ""; //Esto es un if con else
+    var Paciente = document.getElementById("Paciente");
+    Paciente = Paciente ? Paciente.value : ""; //Esto es un if con else
+    var Edad = document.getElementById("Edad");
+    Edad = Edad ? Edad.value : ""; //Esto es un if con else
+    var Estudios = document.getElementById("text-Estudios");
+    Estudios = Estudios ? Estudios.value : ""; //Esto es un if con else
+
+    /*
+    var Honorarios = document.getElementById("Honorarios").value;
+    var Paciente = document.getElementById("Paciente").value;
+    var Edad = document.getElementById("Edad").value;
+    var Estudios = document.getElementById("text-Estudios").value;*/
+    
+    var CheckBox = document.getElementById("cbox1").checked;
+    var CheckBox_val = document.getElementById("cbox1").value;
+    
+    if(rol == 5){
+        var CheckBox2 = document.getElementById("cbox2").checked;
+        var CheckBox_val2 = document.getElementById("cbox2").value; 
+    }else{
+        var CheckBox2 = null;
+        var CheckBox_val2 = null;
+    }
+    
+    $.ajax({
+        type: "POST",
+        url: "app/ModificarEmergencia_Admin.php",
+        data: {
+            "Inicio": Inicio,
+            "Fin": Fin,
+            "Direccion": Direccion,
+            "Precio": Precio,
+            "Honorarios": Honorarios,
+            "Paciente": Paciente,
+            "Edad": Edad,
+            "Estudios": Estudios,
+            "CheckBox": CheckBox,
+            "CheckBox_val": CheckBox_val,
+            "CheckBox2": CheckBox2,
+            "CheckBox_val2": CheckBox_val2
+        },
+        dataType: "html",
+        headers: { 'Access-Control-Allow-Origin': 'origin-list' },
+        beforeSend: function () {
+        },
+        error: function (Error) {
+            console.log("error petición ajax");
+        },
+        success: function (data) {
+            console.log(data);
+            const json = JSON.parse(data);
+            if (json['Retorno'] == '1') {
+                if(CheckBox == false &&  CheckBox2 == false && rol == 5){
+                    alertsweetalert2('Info', 'No se realizó ningún cambio', 'info');
+                }else{
+                    alertsweetalert2('Cambios realizados', '', 'success2');
+                    BuscarEmergencia(false);
+                }
+            } else if (json['Retorno'] == '0') {
+                //console.log("Ocurrio un error al guardar los datos");
+                alertsweetalert2('Error', 'Ocurrió un error al almacenar los datos', 'error');
+            } else if (json['Retorno'] == "-1") {
+                alertsweetalert2('Campos vacíos', 'Por favor llena al menos un campo', 'info');
+            } else {
+                $Mensaje = json['Error']['errorInfo'][2];
+                alertsweetalert2('Error', "Ocurrio un error, no se puede realizar la accion", 'error');
+                console.log("Error SQL:" + $Mensaje);
+            }
+        }
+    });
+}
+
+
+
+
+//FUNCION PARA QUE SOLO SE SELECCIONE UN CHECKBOX
+let Checked = null;
+//The class name can vary
+for (let CheckBox of document.getElementsByClassName('only-one')){
+	CheckBox.onclick = function(){
+        if(Checked != null){
+            Checked.checked = false;
+            Checked = CheckBox;
+        }
+        Checked = CheckBox;
+    }
+}

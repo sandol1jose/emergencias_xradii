@@ -1,0 +1,40 @@
+.grid-container-Config {
+    display: grid;
+    height: 100%;
+    grid-template-columns: 49% auto;
+    gap: 10px;
+    /*background-color: #2196F3;*/
+    padding: 10px;
+}
+  
+.grid-container-Config > div {
+    /*background-color: rgba(255, 255, 255, 0.8);*/
+    text-align: center;
+    padding: 20px 0;
+}
+
+.divtabla1{
+    height: 300px;
+    overflow-x: hidden;
+    overflow-y: scroll;
+}
+
+thead {
+    /*thead fijo*/
+    position: sticky;
+    top: 0;
+}
+
+table{
+    width: 100% !important;
+
+}
+
+.Configitem2{
+    background-color: none;
+}
+
+input[type='number']{
+    height: 42px;
+    width: 150px;
+}

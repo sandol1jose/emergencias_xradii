@@ -5,6 +5,13 @@ if(!isset($_SESSION['Usuario'])){
 }
 
 $Titulo = "Historial";
+
+if(!isset($_SESSION['UsuarioConsulta'])){
+    $UsuarioConsulta = $_SESSION['Usuario']['IDUsuario'];
+}else{
+    $UsuarioConsulta = $_SESSION['UsuarioConsulta'];
+}
+$Rol = $_SESSION['Usuario']['Rol'];
 ?>
 
 <?php include_once '../templates/encabezado.php'; ?>
@@ -77,7 +84,6 @@ $Titulo = "Historial";
     <div class="DivPie_tabla">
         <div class="DivPie_tabla2">
             <table>
-
                 <thead class="theadPie_tabla">
                     <tr>
                     <th class="tdbtn_estado"></th>
@@ -129,7 +135,7 @@ $Hasta = date('Y-m-d', mktime(0,0,0, $month, $day, $year));
 
 $Filtro = ["Desde" => $Desde, "Hasta" => $Hasta];
 
-$Registros = ConsultarEmergencias($_SESSION['Usuario']['IDUsuario'], 2, $Filtro);
+$Registros = ConsultarEmergencias($UsuarioConsulta, 2, $Filtro);
 if($Registros != false){
     $Registros = json_encode($Registros);
     echo '<script>PintarTabla('.$Registros.');</script>';

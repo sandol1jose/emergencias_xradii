@@ -38,18 +38,18 @@ EnviarEmail($Email, $base_de_datos);
 			//Server settings
 			$mail->SMTPDebug = 0;                      //Enable verbose debug output
 			$mail->isSMTP();                                            //Send using SMTP
-			$mail->Host       = 'smtp.gmail.com';                       //Set the SMTP server to send through
-			//$mail->Host       = 'smtp.hostinger.com';                       //Set the SMTP server to send through
+			//$mail->Host       = 'smtp.gmail.com';                       //Set the SMTP server to send through
+			$mail->Host       = 'smtp.hostinger.com';                       //Set the SMTP server to send through
 			$mail->SMTPAuth   = true;                                  //Enable SMTP authentication
-			$mail->Username   = 'sandol1jose@gmail.com';         //SMTP username
-			$mail->Password   = 'bvvohgxfqhtnpecb';                  //SMTP password
+			$mail->Username   = 'soporte@x-radii.com';         //SMTP username
+			$mail->Password   = '2OeAN5zQ9m*b';                  //SMTP password
 			//$mail->Username   = 'soporte@jumpgt.com';             //SMTP username
 			//$mail->Password   = '$6y9KUtAs2sVWF';                  		//SMTP password
 			$mail->SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS;         //Enable TLS encryption; `PHPMailer::ENCRYPTION_SMTPS` encouraged
 			//$mail->Port       = 465;                                    //TCP port to connect to, use 465 for `PHPMailer::ENCRYPTION_SMTPS` above
 			$mail->Port = 587;
 			//Recipients
-			$mail->setFrom('pruebasvarias612@gmail.com', 'XRADII');
+			$mail->setFrom('soporte@x-radii.com', 'X-RADII', 0);
 			$mail->addAddress($Email);                 					//Add a recipient
 		
 			//Content
@@ -130,7 +130,7 @@ EnviarEmail($Email, $base_de_datos);
 		$key = '';
 		//$pattern = '1234567890';s
 		//$pattern = '1234567890ABCDEFGHIJKLMNPOQRSTUVWXYZabcdefghijklmnopqrstuvwxyz+#@$%&=';
-		$pattern = '1234567890ABCDEFGHIJKLMNPOQRSTUVWXYZ';
+		$pattern = '1234567890ABCDEFGHJKMNPOQRSTUVWXYZ';
 		$max = strlen($pattern)-1;
 		//for($i=0;$i < $longitud;$i++) $key .= $pattern{mt_rand(0,$max)};
 		for($i=0;$i < $longitud;$i++) $key .= $pattern[mt_rand(0,$max)];

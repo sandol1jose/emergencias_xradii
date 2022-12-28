@@ -10,11 +10,11 @@
 		exit();
 	}
 
-	$Nombres = $_POST["nombres"];
-    $Apellidos = $_POST["apellidos"];
+	$Nombres = ucwords(strtolower($_POST["nombres"])); //Primera letra mayuscula
+    $Apellidos = ucwords(strtolower($_POST["apellidos"])); //Primera letra mayuscula
     $Rol = $_POST["rol"];
-    $Correo = $_POST["correo"];
-	$Correo = strtolower($Correo);//Convirtiendo todo el correo a minusculas
+	$username = strtolower($_POST["username"]);//Convirtiendo todo el username a minusculas
+    $Correo = strtolower($_POST["correo"]);//Convirtiendo todo el correo a minusculas
 
 	//VERIFICAMOS QUE EL CORREO NO EXISTA EN LA BASE DE DATOS
 	$sql = "SELECT u.id FROM usuarios u WHERE u.correo = '".$Correo."';";
@@ -26,8 +26,8 @@
 
 		$Pass = $_POST["pass"];
 		$PassCifrada = password_hash($Pass, PASSWORD_DEFAULT); //Encriptando contraseñas
-		$sentencia = $base_de_datos->prepare("CALL NuevoUsuario(?,?,?,?,?);");
-		$resultado = $sentencia->execute([$Nombres, $Apellidos, $Correo, $PassCifrada, $Rol]);
+		$sentencia = $base_de_datos->prepare("CALL NuevoUsuario(?,?,?,?,?,?);");
+		$resultado = $sentencia->execute([$Nombres, $Apellidos, $username, $Correo, $PassCifrada, $Rol]);
 			
 		if($resultado == true){
 			//SE AGREGO CORRECTAMENTE AL CLIENTE

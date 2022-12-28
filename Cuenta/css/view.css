@@ -65,6 +65,8 @@ div::-webkit-scrollbar {
 }
 
 .divdetalles{
+    display: grid;
+    grid-template-rows: 65% auto;
     height: 100%;
     width: 25%;
     background-color: none;
@@ -73,7 +75,6 @@ div::-webkit-scrollbar {
     .detalles{
         display: grid;
         grid-template-rows: 30px auto;
-        height: 65%;
         background-color: none;
         padding-left: 10px;
         padding-right: 10px;
@@ -124,6 +125,23 @@ div::-webkit-scrollbar {
         border-radius: 0px 0px 0px 20px;
     }
 
+
+    /*Div de los botonoes*/
+    .detalles_botones{
+        display: flex;
+        padding-left: 10px;
+        flex-direction: column;
+        align-content: flex-start;
+        flex-wrap: wrap;
+        justify-content: center;
+    }
+
+    .detalles_botones > label {
+        margin-bottom: 10px;
+        font-size: 15px;
+        display: flex;
+        align-items: center;
+    }
 
 
 

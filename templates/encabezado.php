@@ -31,3 +31,8 @@ $Servidor = $ip.'/xradii/Emergencias';
 
 
 <script src="<?php echo $Servidor; ?>/Cuenta/js/general.js"></script>
+
+
+<script>
+    var MargenInferior = 0;
+</script>
