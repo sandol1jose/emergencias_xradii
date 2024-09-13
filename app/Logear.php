@@ -48,20 +48,26 @@
 					//Redirigiendo según el rol
 					$ruta = NULL;
 					switch ($rol) {
-						case 1://Para el tecnico
+						case 1://Técnico de Rayos X nivel I
+						case 3://Radiólogo
+						case 4://Laborante de mantenimiento
+						case 8://Asistente de radiología
+						case 9://Asistente Administrativo II
+						case 10://Técnico de Rayos X nivel II
+						case 11://Secretaria recepcionista
+						case 12://Conserje
+						case 13://Asistente de Técnico de Rayos X
+						case 14://Coordinadora de Recursos Humanos
+						case 15://Contador General 
+						case 16://Supervisor Operativo y Soporte Técnico
 							$ruta = "../Cuenta/index.php";
 							break;
 
 						case 2://Para el Administrador
-							$ruta = "../Cuenta/Tecnicos.php";
-							break;
-
 						case 5://Para el admin
+						case 6://Gerente General
+						case 7://Director General
 							$ruta = "../Cuenta/Tecnicos.php";
-							break;
-
-						case 4://Para el piloto
-							$ruta = "../Cuenta/index.php";
 							break;
 					}
 					header('Location: ' . $ruta);

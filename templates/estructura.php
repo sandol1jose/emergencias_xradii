@@ -10,7 +10,7 @@ $RolUsuario = $_SESSION['Usuario']['Rol'];
             </div>
 
 
-            <?php if($RolUsuario == 1 || $RolUsuario == 4){ //Para tecnicos y piloto ?>
+            <?php if($RolUsuario == 1 || $RolUsuario == 3 || $RolUsuario == 4 || $RolUsuario == 8 || $RolUsuario == 9 || $RolUsuario == 10 || $RolUsuario == 11 || $RolUsuario == 12 || $RolUsuario == 13 || $RolUsuario == 14 || $RolUsuario == 15 || $RolUsuario == 16){ //Para tecnicos y piloto ?>
 
                 <div class="Botones">
                     <a href="../Cuenta/index.php">
@@ -36,7 +36,7 @@ $RolUsuario = $_SESSION['Usuario']['Rol'];
                     </a>
                 </div>
 
-            <?php }else if($RolUsuario == 2){//Para administrador ?>
+                <?php }else if($RolUsuario == 2 || $RolUsuario == 6 || $RolUsuario == 7){//Para administrador ?>
 
                 <div class="Botones">
                     <a href="../Cuenta/Tecnicos.php">
@@ -106,7 +106,7 @@ $RolUsuario = $_SESSION['Usuario']['Rol'];
         </div>
 
 
-        <?php if($RolUsuario == 1 || $RolUsuario == 4){ //Para tecnicos y piloto ?>
+        <?php if($RolUsuario == 1 || $RolUsuario == 3 || $RolUsuario == 4 || $RolUsuario == 8 || $RolUsuario == 9 || $RolUsuario == 10 || $RolUsuario == 11 || $RolUsuario == 12 || $RolUsuario == 13 || $RolUsuario == 14 || $RolUsuario == 15 || $RolUsuario == 16){ //Para tecnicos y piloto ?>
 
         <div class="Botones">
             <a href="../Cuenta/index.php">
@@ -132,7 +132,7 @@ $RolUsuario = $_SESSION['Usuario']['Rol'];
             </a>
         </div>
 
-    <?php }else if($RolUsuario == 2){//Para administrador ?>
+        <?php }else if($RolUsuario == 2 || $RolUsuario == 5 || $RolUsuario == 6 || $RolUsuario == 7){//Para administrador ?>
 
         <div class="Botones">
             <a href="../Cuenta/Tecnicos.php">
