@@ -6,7 +6,7 @@ let Registros = null;
 let MargenInferior = 30; //Variable para el margen inferior de la tabla (usado en general.js)
 
 //Efecto de fade para las imagenes
-$('#btn_Menu').click(function () {
+/*$('#btn_Menu').click(function () {
     $("#item3").fadeToggle(100, function () {
         $("#item2").fadeToggle(100, function () {
             $("#item1").fadeToggle(250);
@@ -14,6 +14,13 @@ $('#btn_Menu').click(function () {
     });
 });
 
+$('#btn_close').click(function () {
+    $("#item1").fadeToggle(100, function () {
+        $("#item2").fadeToggle(100, function () {
+            $("#item3").fadeToggle(250);
+        });
+    });
+});*/
 
 //DAR CLICK A INPUT FILE
 function BuscarArchivo(idFileImagen) {
@@ -207,6 +214,19 @@ function NuevaEmergencia(){
     var Direccion = document.getElementById("Direccion").value;
     var Honorarios = document.getElementById("Honorarios").value;
 
+    if(Inicio != "" & Fin != ""){
+        var date = new Date();
+        var year = date.getFullYear();
+        var month = date.getMonth() + 1;
+        var day = date.getDate();
+        var fecha = year + "/" + month + "/" + day;
+
+        /*Calculando las horas aproximadas*/
+        var horas = CalcularHoras(fecha, Inicio, Fin);
+    }else{
+        var horas = 0;
+    }
+
     var Precio = document.getElementById("Precio");
     Precio = Precio ? Precio.value : ""; //Esto es un if con else
     var Paciente = document.getElementById("Paciente");
@@ -230,7 +250,8 @@ function NuevaEmergencia(){
             "Paciente": Paciente,
             "Edad": Edad,
             "Estudios": Estudios,
-            "Comentarios": Comentarios
+            "Comentarios": Comentarios,
+            "horas": horas
         },
         dataType: "html",
         headers: { 'Access-Control-Allow-Origin': 'origin-list' },
@@ -437,6 +458,19 @@ function ModificarEmergencia() {
     var Direccion = document.getElementById("Direccion").value;
     var Honorarios = document.getElementById("Honorarios").value;
 
+    if(Inicio != "" & Fin != ""){
+        var date = new Date();
+        var year = date.getFullYear();
+        var month = date.getMonth() + 1;
+        var day = date.getDate();
+        var fecha = year + "/" + month + "/" + day;
+
+        /*Calculando las horas aproximadas*/
+        var horas = CalcularHoras(fecha, Inicio, Fin);
+    }else{
+        var horas = 0;
+    }
+
     var Precio = document.getElementById("Precio");
     Precio = Precio ? Precio.value : ""; //Esto es un if con else
     var Paciente = document.getElementById("Paciente");
@@ -469,7 +503,8 @@ function ModificarEmergencia() {
             "Edad": Edad,
             "Estudios": Estudios,
             "Comentarios": Comentarios,
-            "IDEmergencia": IDEmergencia
+            "IDEmergencia": IDEmergencia,
+            "horas": horas
         },
         dataType: "html",
         headers: { 'Access-Control-Allow-Origin': 'origin-list' },
@@ -543,7 +578,7 @@ function HoraActual() {
     document.getElementById("Inicio").value = hora;
 }
 HoraActual();
-setInterval('HoraActual()', 30000);
+//setInterval('HoraActual()', 30000);
 
 
 

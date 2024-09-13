@@ -4,6 +4,24 @@ let Desde = null;
 let Hasta = null;
 let MargenInferior = 50; //Variable para el margen inferior de la tabla (usado en general.js)
 
+
+//Efecto de fade para las imagenes
+/*$('#btn_Menu').click(function () {
+    $("#item3").fadeToggle(100, function () {
+        $("#item2").fadeToggle(100, function () {
+            $("#item1").fadeToggle(250);
+        });
+    });
+});
+
+$('#btn_close').click(function () {
+    $("#item1").fadeToggle(100, function () {
+        $("#item2").fadeToggle(100, function () {
+            $("#item3").fadeToggle(250);
+        });
+    });
+});*/
+
 function PintarTabla(json) {
     //Funcion para pintar la tabla
     document.getElementById("tbody_tabla").innerHTML = "";
@@ -13,6 +31,7 @@ function PintarTabla(json) {
     let SUMBonif = 0;
     for (var i in json) {
         var RegistroIndividual = json[i];
+        console.log(RegistroIndividual);
 
         let fecha = RegistroIndividual['fecha'];
         let inicio = RegistroIndividual['inicio'];
@@ -42,10 +61,10 @@ function PintarTabla(json) {
 
 
         //Calculando el precio
-        var precio = RegistroIndividual['precio'];
-        var honorarios = RegistroIndividual['honorarios'];
-        var hora_extra = RegistroIndividual['hora_extra'];
-        var Bonificacion = 0.00
+        var precio = Number(RegistroIndividual['precio']);
+        var honorarios = Number(RegistroIndividual['honorarios']);
+        var hora_extra = Number(RegistroIndividual['hora_extra']);
+        var Bonificacion = 0.00;
 
         if(precio == null){
             //precio = "";

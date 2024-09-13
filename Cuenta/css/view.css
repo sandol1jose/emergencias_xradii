@@ -1,5 +1,5 @@
 
-.contenedor {
+.contenedor, .contenedor2 {
     grid-template-columns: 130px 130px 450px auto;
     grid-template-rows: 10px 45px 45px 45px;
 }
@@ -153,7 +153,7 @@ div::-webkit-scrollbar {
     grid-template-rows: 30px auto;
     padding-left: 10px;
     padding-right: 10px;
-    
+    box-sizing: border-box;
 }
 
     .divcomentarios > .div_tabla {
@@ -171,7 +171,7 @@ div::-webkit-scrollbar {
     }
 
     .div_Contorno > .arriba{
-        max-height: 300px;
+        max-height: none;
         background-color: transparent;
         border-radius: 25px 25px 0px 0px;
         padding: 10px;
@@ -182,10 +182,6 @@ div::-webkit-scrollbar {
     .arriba td{
         border: 0;
         word-wrap: break-word;
-    }
-
-    .arriba  td:nth-child(1){
-
     }
 
     .arriba td:last-child{
@@ -241,3 +237,71 @@ div::-webkit-scrollbar {
         margin: 0px !important;
         border: 0px !important;
     }
+
+
+
+
+
+
+/*MEDIA QUERYS //////////////////////////////////////////////////
+PARA CELULARES*/
+@media screen and (max-width: 650px) {
+    .contenedor {
+        grid-template-columns: auto auto;
+        grid-template-rows: 10px 45px 45px 45px 45px 80px 70px;
+    }
+
+    .ContenedorBase{
+        margin-bottom: 0px;
+    }
+
+    .ContenedorBase2{
+        flex-direction: column;
+        height: max-content;
+    }
+
+    .divdetalles{
+        grid-template-rows: auto auto;
+        height: auto;
+        width: auto;
+    }
+
+    .div_Contorno > .arriba {
+        height: auto !important;
+        max-height: none;
+    }
+
+    .divcomentarios{
+        width: auto;
+        box-sizing: border-box;
+        height: max-content;
+        min-height: 300px;
+    }
+
+    .arriba td:last-child {
+        width: 30%;
+    }
+
+    .arriba td{
+        padding-left: 0px;
+    }
+
+
+    .estilo7{
+        grid-template-rows: auto;
+    }
+
+
+
+
+    /*Para el tecnico*/
+    .contenedor2{
+        grid-template-columns: auto auto;
+        grid-template-rows: 10px 45px 45px 45px 45px;
+    }
+
+    .contenedor2 > .estilo10{
+        grid-row: 5 / 6;
+    }
+
+}

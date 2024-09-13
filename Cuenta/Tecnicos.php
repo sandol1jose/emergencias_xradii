@@ -22,7 +22,7 @@ include $ruta;
 
 $sql = "SELECT u.id, u.nombres, u.apellidos, u.correo, r.nombre_rol FROM usuarios u 
 JOIN rol r ON u.F_rol = r.id 
-WHERE u.F_rol = 1 OR u.F_rol = 4";
+WHERE u.F_rol NOT IN (5, 6) AND u.apellidos != 'Prueba';";
 $sentencia = $base_de_datos->prepare($sql);
 $sentencia->execute(); 
 $registro = $sentencia->fetchAll(PDO::FETCH_ASSOC);
@@ -40,7 +40,7 @@ $registro = $sentencia->fetchAll(PDO::FETCH_ASSOC);
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Tecnicos</title>
 
-    <link href="css/historial.css" rel="stylesheet">
+    <link href="css/tecnicos.css" rel="stylesheet">
 </head>
 <body>
 
@@ -52,8 +52,8 @@ $registro = $sentencia->fetchAll(PDO::FETCH_ASSOC);
 
 <div class="ContenedorBase2">
 
-    <div class="divTabla">
-        <div class="divtabla2">
+    <div class="divTabla_tec">
+        <div class="divtabla2_tec">
             <table>
                 <thead>
                     <tr>

@@ -1,11 +1,13 @@
 /* FUNCION PARA CALCULAR LA DIMENSION DEL DIV DE LA TABLA */
 function CalcularDiv() {
-    var ContenedorBase = $(".ContenedorBase").height();
-    var item2 = $(".item2").height();
-    var heightCompleto = $(window).height();
-    var Restante = heightCompleto - ContenedorBase - item2 - MargenInferior;
-    $('.divTabla').height(Restante);
-    $('.divTabla2').height(Restante);
+    if(typeof MargenInferior !== 'undefined'){
+        var ContenedorBase = $(".ContenedorBase").height();
+        var item2 = $(".item2").height();
+        var heightCompleto = $(window).height();
+        var Restante = heightCompleto - ContenedorBase - item2 - MargenInferior;
+        $('.divTabla').height(Restante);
+        $('.divTabla2').height(Restante);
+    }
 }
 
 $(window).resize(function(){

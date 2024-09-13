@@ -91,7 +91,7 @@ $Titulo = "Detalle de emergencia";
             <input type="hidden" name="id-Emergencia" id="id-Emergencia">
         </div>
     <?php }else{ ?> 
-        <div class="contenedor">
+        <div class="contenedor2">
             <div class="estilo1"><span>Inicio</span></div>
             <div class="estilo2"><span>Fin</span></div>
             <div class="estilo3"></div>  
@@ -137,7 +137,6 @@ $Titulo = "Detalle de emergencia";
                 <label><input type="checkbox" id="cbox1" value="Revision"> Marcar como revisada</label>
                 <button class="BotonGeneral" onclick="GuardarCambios('2');">Guardar</button>
             <?php } ?>
-
             <?php //Para usuario admin
             if($Rol == 5 && $EstadoEmergencia == 3 ){ ?>
                 <label><input type="checkbox" name="cboxadmin" id="cbox1" value="Aprobada" class="only-one"> Marcar como aprobada</label>
@@ -149,7 +148,7 @@ $Titulo = "Detalle de emergencia";
 
     <div class="divcomentarios">
         <div class="det_title">
-            <h1>Detalles</h1>
+            <h1>Comentarios</h1>
         </div>
 
         <div class="div_tabla">

@@ -65,7 +65,7 @@ $Titulo = "Ingresar nueva emergencia";
         </div>
 
     <?php }else{ ?>
-        <div class="contenedor">
+        <div class="contenedor2">
             <div class="estilo1"><span>Inicio</span></div>
             <div class="estilo2"><span>Fin</span></div>
             <div class="estilo3"></div>  
@@ -108,12 +108,9 @@ $Titulo = "Ingresar nueva emergencia";
 
 
 <div class="ContenedorBase2">
-
-
-    
     <div class="divTabla">
         <div class="divtabla2">
-            <table>
+            <table class="tablaResponsiva">
                 <thead>
                     <tr>
                         <th class="tdfecha">Fecha</th>

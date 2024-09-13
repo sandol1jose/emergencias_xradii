@@ -1,0 +1,49 @@
+.divTabla_tec{
+    grid-template-columns: auto;
+    padding-left: 10px;
+    padding-right: 10px;
+}
+
+.divTabla2_tec{
+    border-radius: 15px 15px 0px 0px;
+    border-left: 1px solid #BBBBBB;
+    border-right: 1px solid #BBBBBB;
+    border-bottom: 1px solid #BBBBBB;
+    align-items: flex-start;
+    justify-content: center;
+  
+    align-items: flex-start;
+    justify-content: center;
+    overflow-x: hidden;
+    overflow-y: scroll;
+}
+
+thead {
+    /*thead fijo*/
+    position: sticky;
+    top: 0;
+}
+
+td, th{
+    border-left: 0px solid black;
+    border-bottom: 1px solid #BBBBBB;
+    font-size: 11px;
+    word-wrap: break-word;
+    min-width: 30px;
+}
+
+
+/*MEDIA QUERYS //////////////////////////////////////////////////
+PARA CELULARES*/
+@media screen and (max-width: 650px) {
+
+    .divtabla2_tec > table tr th:nth-child(3),
+    .divtabla2_tec > table tr td:nth-child(3) {
+        display: none;
+    }
+
+    .divtabla2_tec > table tr th:nth-child(4),
+    .divtabla2_tec > table tr td:nth-child(4) {
+        width: 50px;
+    }
+}

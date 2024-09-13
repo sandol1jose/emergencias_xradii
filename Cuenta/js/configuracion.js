@@ -1,5 +1,22 @@
 var MargenInferior = 0;
 
+//Efecto de fade para las imagenes
+/*$('#btn_Menu').click(function () {
+    $("#item3").fadeToggle(100, function () {
+        $("#item2").fadeToggle(100, function () {
+            $("#item1").fadeToggle(250);
+        });
+    });
+});
+
+$('#btn_close').click(function () {
+    $("#item1").fadeToggle(100, function () {
+        $("#item2").fadeToggle(100, function () {
+            $("#item3").fadeToggle(250);
+        });
+    });
+});*/
+
 function Autorizar(id) {
 
     var Check = document.getElementById("check_" + id).checked;
@@ -27,12 +44,19 @@ function Autorizar(id) {
 }
 
 
-function UpdateHoraExtra() {
-    var precio = document.getElementById("horaExtra").value;
+function UpdateHoraExtra(idDatos) {
+    if(idDatos == 1){
+        var precio = document.getElementById("horaExtra").value;
+    }
+
+    if(idDatos == 2){
+        var precio = document.getElementById("horaExtra2").value;
+    }
+    
     $.ajax({
         type: "POST",
         url: "app/ActualizarHoraExtra.php",
-        data: { "precio": precio},
+        data: { "precio": precio, "idDatos": idDatos},
         dataType: "html",
         headers: { 'Access-Control-Allow-Origin': 'origin-list' },
         beforeSend: function () {

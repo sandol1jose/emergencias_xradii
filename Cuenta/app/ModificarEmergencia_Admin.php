@@ -25,6 +25,7 @@ $Edad = $_POST["Edad"];
 $Estudios = $_POST["Estudios"];
 $IDEmergencia = $_SESSION['IDEmergencia'];
 $Rol = $_SESSION['Rol_Usuario_Emergencia'];//Variable de Session que almacena el Rol del usuario propietario de la Emergencia
+$horas = $_POST["horas"];
 
 //Para aprovar o revisar
 $CheckBox = $_POST["CheckBox"];
@@ -71,7 +72,7 @@ if($Rol == 4){
 //Que al menos 8 parámetro esté lleno
 if($Parametros_Llenos == $Cantidad_Campos){
     try {
-        $sentencia = $base_de_datos->prepare("CALL UpdateEmergencia_Admin(?,?,?,?,?,?,?,?,?,?);");
+        $sentencia = $base_de_datos->prepare("CALL UpdateEmergencia_Admin(?,?,?,?,?,?,?,?,?,?,?);");
         $resultado = $sentencia->execute([
                 $Inicio, 
                 $Fin, 
@@ -82,7 +83,8 @@ if($Parametros_Llenos == $Cantidad_Campos){
                 $Edad,
                 $Estudios, 
                 $IDEmergencia,
-                $Estado
+                $Estado,
+                $horas
         ]);
 
         if($resultado == true){

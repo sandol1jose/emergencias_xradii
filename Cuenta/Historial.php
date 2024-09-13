@@ -43,7 +43,7 @@ $Rol = $_SESSION['Usuario']['Rol'];
                 <option value="0">Todas</option>
                 <option value="2">Ingresada</option>
                 <option value="3">Revisada</option>
-                <option value="4">Aprovada</option>
+                <option value="4">Aprobada</option>
             </select>
         </div>
         <div class="Filtro_item7"><button class="BotonGeneral" onclick="Filtrar();" >Buscar</button></div>
@@ -139,5 +139,20 @@ $Registros = ConsultarEmergencias($UsuarioConsulta, 2, $Filtro);
 if($Registros != false){
     $Registros = json_encode($Registros);
     echo '<script>PintarTabla('.$Registros.');</script>';
+}
+?>
+
+<?php
+//Consultando si existe ya una variable de sessión con un filtro
+//Esto para que no estén colocando el filtro muchas veces al regresar a la pagina
+if(isset($_SESSION["Filtro_Historial"])){
+    $Filtro = $_SESSION["Filtro_Historial"];
+    $desde = $Filtro['Desde'];
+    $hasta = $Filtro['Hasta'];
+    $estado = $Filtro['estado'];
+    echo "<script>document.getElementById('desde').value = '$desde'</script>";
+    echo "<script>document.getElementById('hasta').value = '$hasta'</script>";
+    echo "<script>document.getElementById('estado').value = '$estado'</script>";
+    echo '<script>Filtrar();</script>';
 }
 ?>

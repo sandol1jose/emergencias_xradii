@@ -22,11 +22,12 @@ $sentencia->execute();
 $registro = $sentencia->fetchAll(PDO::FETCH_ASSOC);
 
 //Consultado el precio de la hora extra
-$sql = "SELECT precio FROM datos WHERE dato = 'hora_extra'";
+$sql = "SELECT precio FROM datos";
 $sentencia = $base_de_datos->prepare($sql);
 $sentencia->execute(); 
 $registro2 = $sentencia->fetchAll(PDO::FETCH_ASSOC);
-$HoraExtra = $registro2[0]["precio"];
+$HoraExtra_Tecnicos = $registro2[0]["precio"];
+$HoraExtra_Piloto = $registro2[1]["precio"];
 ?>
 
 <?php include_once '../templates/encabezado.php'; ?>
@@ -79,9 +80,13 @@ $HoraExtra = $registro2[0]["precio"];
     </div>
 
     <div class="Configitem2">
-        <h1>Precio Hora Extra</h1>
-        <input id="horaExtra" type="number" step="0.01" min="0.01" value="<?php echo $HoraExtra; ?>">
-        <button class="BotonGeneral" onclick="UpdateHoraExtra()">Guardar</button>
+        <h1>Precio Hora Extra - Técnicos</h1>
+        <input id="horaExtra" type="number" step="0.01" min="0.01" value="<?php echo $HoraExtra_Tecnicos; ?>">
+        <button class="BotonGeneral" onclick="UpdateHoraExtra(1)">Guardar</button>
+
+        <h1>Precio Hora Extra - Laborante de mantenimiento</h1>
+        <input id="horaExtra2" type="number" step="0.01" min="0.01" value="<?php echo $HoraExtra_Piloto; ?>">
+        <button class="BotonGeneral" onclick="UpdateHoraExtra(2)">Guardar</button>
     </div>
     <div class="Configitem3"></div>  
     <div class="Configitem4"></div>

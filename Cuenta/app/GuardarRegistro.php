@@ -27,6 +27,7 @@ $Comentarios = $_POST["Comentarios"];
 $fechaActual = date('Y-m-d');
 $IDUsuario = $_SESSION['Usuario']['IDUsuario'];
 $Rol = $_SESSION['Usuario']['Rol'];
+$horas = $_POST["horas"];
 
 //Verificando si algunos parametros están vacios / y de ésta manera saber que estado tendrá la Emergencia
 $Inicio = VerificarParametros($Inicio, true);
@@ -55,7 +56,7 @@ if($Parametros_Llenos === $Cantidad_Campos){
 //Que al menos un parámetro esté lleno
 if($Parametros_Llenos > 0){
     try {
-        $sentencia = $base_de_datos->prepare("CALL NuevaEmergencia(?,?,?,?,?,?,?,?,?,?,?,?,@IDEmergencia);");
+        $sentencia = $base_de_datos->prepare("CALL NuevaEmergencia(?,?,?,?,?,?,?,?,?,?,?,?,?,?,@IDEmergencia);");
         $resultado = $sentencia->execute([
                 $fechaActual, 
                 $Inicio, 
@@ -68,7 +69,9 @@ if($Parametros_Llenos > 0){
                 $Estudios, 
                 $Comentarios,
                 $IDUsuario,
-                $Estado
+                $Estado,
+                $horas,
+                $Rol
         ]);
     
         //Obteniendo el ID de la Emergencia

@@ -12,6 +12,7 @@ if(isset($_POST["desde"]) && isset($_POST["hasta"]) && isset($_POST["estado"])){
         }else{
             $UsuarioConsulta = $_SESSION['UsuarioConsulta'];
         }
+	$_SESSION["Filtro_Historial"] = $Filtro;
         echo json_encode(ConsultarEmergencias($UsuarioConsulta, 2, $Filtro));
     }else{
         echo "0"; //Campo de fechas vacios

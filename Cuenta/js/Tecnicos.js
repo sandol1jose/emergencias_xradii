@@ -1,6 +1,5 @@
 MargenInferior = 30; //Variable para el margen inferior de la tabla (usado en general.js)
 
-
 function VerUsuario(idUsuario) {
     console.log(idUsuario);
 

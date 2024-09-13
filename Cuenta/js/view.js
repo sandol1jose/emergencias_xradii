@@ -3,6 +3,23 @@ let MargenInferior = 50; //Variable para el margen inferior de la tabla (usado e
 const GIDUsuario = null;
 */
 
+//Efecto de fade para las imagenes
+/*$('#btn_Menu').click(function () {
+    $("#item3").fadeToggle(100, function () {
+        $("#item2").fadeToggle(100, function () {
+            $("#item1").fadeToggle(250);
+        });
+    });
+});
+
+$('#btn_close').click(function () {
+    $("#item1").fadeToggle(100, function () {
+        $("#item2").fadeToggle(100, function () {
+            $("#item3").fadeToggle(250);
+        });
+    });
+});
+*/
 
 BuscarEmergencia(true);
 function BuscarEmergencia(ActualizarImagenes){
@@ -164,7 +181,7 @@ function ConsultarComentarios(){
                 
             } else if (json['Retorno'] == '0') {
                 //console.log("Ocurrio un error al guardar los datos");
-                alertsweetalert2('Error', 'Ocurrió un error al buscar los comentarios', 'error');
+                //alertsweetalert2('Error', 'Ocurrió un error al buscar los comentarios', 'error');
             } else {
                 $Mensaje = json['Error']['errorInfo'][2];
                 alertsweetalert2('Error', "Ocurrio un error, no se puede realizar la accion", 'error');
@@ -261,7 +278,7 @@ function GuardarComentario(motivo, comentario) {
                     alertsweetalert2('Comentario agregado', '', 'success2');
                 } else if (json['Retorno'] == '0') {
                     //console.log("Ocurrio un error al guardar los datos");
-                    alertsweetalert2('Error', 'Ocurrió un error al buscar los comentarios', 'error');
+                    //alertsweetalert2('Error', 'Ocurrió un error al buscar los comentarios', 'error');
                 } else {
                     $Mensaje = json['Error']['errorInfo'][2];
                     alertsweetalert2('Error', "Ocurrio un error, no se puede realizar la accion", 'error');
@@ -280,6 +297,19 @@ function GuardarCambios(rol){
     var Fin = document.getElementById("Fin").value;
     var Direccion = document.getElementById("Direccion").value;
     var Honorarios = document.getElementById("Honorarios").value;
+
+    if(Inicio != "" & Fin != ""){
+        var date = new Date();
+        var year = date.getFullYear();
+        var month = date.getMonth() + 1;
+        var day = date.getDate();
+        var fecha = year + "/" + month + "/" + day;
+
+        /*Calculando las horas aproximadas*/
+        var horas = CalcularHoras(fecha, Inicio, Fin);
+    }else{
+        var horas = 0;
+    }
 
     var Precio = document.getElementById("Precio");
     Precio = Precio ? Precio.value : ""; //Esto es un if con else
@@ -322,7 +352,8 @@ function GuardarCambios(rol){
             "CheckBox": CheckBox,
             "CheckBox_val": CheckBox_val,
             "CheckBox2": CheckBox2,
-            "CheckBox_val2": CheckBox_val2
+            "CheckBox_val2": CheckBox_val2,
+            "horas": horas
         },
         dataType: "html",
         headers: { 'Access-Control-Allow-Origin': 'origin-list' },
@@ -370,3 +401,38 @@ for (let CheckBox of document.getElementsByClassName('only-one')){
         Checked = CheckBox;
     }
 }
+
+
+
+
+
+
+
+
+
+
+
+/* FUNCION PARA CALCULAR LA DIMENSION DEL DIV DE LA TABLA DE LOS COMENTARIOS */
+function CalcularDivComentarios() {
+    if(typeof MargenInferior !== 'undefined'){
+        var widthCompleto = $(window).width();//Tamaño de la pantalla
+        if(widthCompleto > 650){ //Solo para computadoras
+            var heightCompleto = $(window).height();//Tamaño de la pantalla
+            var ContenedorBase = $(".ContenedorBase").height();
+            var item2 = $(".item2").height(); //la parte gris de arriba
+            var det_title = $(".det_title").height(); //Titulo de la tabla
+            var abajo  = $(".abajo").height(); //PParte de abajo de la tabla
+            var PaddingBootom = 20; //Pading inferior de la tabla de los comentarios
+            var Restante = heightCompleto - ContenedorBase - item2 - det_title - abajo - PaddingBootom - 35;
+            $('.arriba').height(Restante);
+        }
+    }
+}
+
+$(window).resize(function(){
+    CalcularDivComentarios();
+});
+
+$(document).ready(function(){
+    CalcularDivComentarios();
+});

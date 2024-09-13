@@ -60,12 +60,16 @@ body{
   .btn_Menu{
     height: 50px;
     width: 50px;
-    background-color: red;
+    background-color: none;
     display: none;
   }
   
   .btn_Menu:checked ~ div{
     left: 0;
+  }
+
+  .btnx{
+    display: none;
   }
   
   .Vinculo{
@@ -97,11 +101,63 @@ body{
   
   
   
+
+.Menu{
+  position: fixed;
+  z-index: 100;
+  height: 100vh;
+  width: 100%;
+  background-color: none;
+  left: 0px;
+  display: none;
+}
+
+.menus{
+  height: 100vh;
+  position: fixed;
+  width: 100%;
+  background-color: #2E2E2E;
+}
+
+.mostrar{
+  display: block;
+  /*animation: */
+  animation-name: mover;
+  animation-duration: 0.4s;
+}
+
+.ocultar{
+  display: block;
+  /*animation: */
+  animation-name: ocultar;
+  animation-duration: 0.4s;
+  animation-fill-mode: forwards;
+}
+
+@keyframes mover {
+  0%{
+    transform: translate(-100%);
+  }
+
+  100%{
+    transform: translateX(0);
+  }
+}
+
+@keyframes ocultar {
+  0%{
+    transform: translate(0);
+  }
+
+  100%{
+    transform: translateX(-100%);
+  }
+}
   
   
   /*MEDIA QUERYS //////////////////////////////////////////////////
   PARA CELULARES*/
-  /*@media screen and (max-width: 650px) {
+  @media screen and (max-width: 650px) {
     .grid-container {
       grid-template-columns: auto;
     }
@@ -114,8 +170,65 @@ body{
       display: block;
     }
   
+    .item2{
+      display: flex;
+    }
+
     .btn_Menu{
       display: block;
+      display: flex;
+      align-items: center;
+    }
+
+    .btnx{
+      display: block;
+      padding-right: 10px;
+    }
+
+    .btnx > button{
+      background: none;
+      background-image: url('../imagenes/close.png');
+      background-size: 36px;
+      background-repeat: no-repeat;
+      background-position: center;
+      width: 36px;
+      height: 36px;
+      border: none;
+      outline: none;
+      padding: 0px;
+      margin: 0px;
+      cursor: pointer;
+      padding-right: 10px;
+    }
+
+    .btnx:hover > button{
+      background-color: #3f5bfa;
+    }
+
+    .btn_Menu > button{
+      background: none;
+      background-image: url('../imagenes/menu.png');
+      background-repeat: no-repeat;
+      background-size: 36px;
+      background-position: center;
+      width: 36px;
+      height: 36px;
+      border: none;
+      outline: none;
+      padding: 0px;
+      margin: 0px;
+      cursor: pointer;
+      margin-left: 10px;
+    }
+
+    .btn_Menu:hover > button{
+      background-color: #cacaca;
+    }
+
+    .Logo{
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
     }
     
-  }*/
+  }

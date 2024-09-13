@@ -1,8 +1,8 @@
 <?php
 date_default_timezone_set('America/Guatemala');
-$ip = "http://localhost";
-//$ip = "https://alertaempresas.com/";
-$Servidor = $ip.'/xradii/Emergencias';
+//$ip = "http://localhost";
+$ip = "https://emergencias.x-radii.com/";
+$Servidor = $ip.'';
 //$Servidor = $ip;
 ?>
 
@@ -31,8 +31,3 @@ $Servidor = $ip.'/xradii/Emergencias';
 
 
 <script src="<?php echo $Servidor; ?>/Cuenta/js/general.js"></script>
-
-
-<script>
-    var MargenInferior = 0;
-</script>

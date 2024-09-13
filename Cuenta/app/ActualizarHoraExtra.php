@@ -6,9 +6,10 @@ include $ruta;
 
 $Retorno = NULL;
 $precio = $_POST['precio'];
+$idDatos = $_POST['idDatos'];
 
 try {
-    $sql = "UPDATE datos SET precio = ".$precio." WHERE dato = 'hora_extra';";
+    $sql = "UPDATE datos SET precio = ".$precio." WHERE id = ".$idDatos.";";
     $sentencia = $base_de_datos->prepare($sql);
     $sentencia->execute(); 
     if($sentencia){

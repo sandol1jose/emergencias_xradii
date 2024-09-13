@@ -28,6 +28,7 @@ $IDEmergencia = $_POST["IDEmergencia"];
 $fechaActual = date('Y-m-d');
 $IDUsuario = $_SESSION['Usuario']['IDUsuario'];
 $Rol = $_SESSION['Usuario']['Rol'];
+$horas = $_POST["horas"];
 
 //Verificando si algunos parametros están vacios / y de ésta manera saber que estado tendrá la Emergencia
 $Inicio = VerificarParametros($Inicio, true);
@@ -55,7 +56,7 @@ if($Parametros_Llenos === $Cantidad_Campos){
 //Que al menos un parámetro esté lleno
 if($Parametros_Llenos > 0){
     try {
-        $sentencia = $base_de_datos->prepare("CALL UpdateEmergencia(?,?,?,?,?,?,?,?,?,?,?,?,?);");
+        $sentencia = $base_de_datos->prepare("CALL UpdateEmergencia(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?);");
         $resultado = $sentencia->execute([
                 $fechaActual, 
                 $Inicio, 
@@ -69,7 +70,9 @@ if($Parametros_Llenos > 0){
                 $Comentarios,
                 $IDEmergencia,
                 $Estado,
-                $IDUsuario
+                $IDUsuario,
+                $horas,
+                $Rol
         ]);
     
         //Guardando las imagenes (Si hubieran)
