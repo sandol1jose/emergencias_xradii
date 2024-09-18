@@ -1,0 +1,3 @@
+#RewriteEngine On
+#RewriteCond %{REQUEST_URI} !/mantenimiento.php$
+#RewriteRule ^(.*)$ /mantenimiento.php [R=307,L]

@@ -2,6 +2,7 @@
 session_start();//inicio de sesion
 
 $Rol = $_SESSION['Usuario']['Rol'];
+$IDUsuario = $_SESSION['Usuario']['IDUsuario'];
 if($Rol == 1 || $Rol == 4){
     header('Location: ../Login/index.php');
 }
@@ -14,9 +15,9 @@ $Titulo = "Configuración";
 $ruta = dirname( __FILE__ ) . '/../conexion.php';
 include $ruta;
 
-$sql = "SELECT u.id, u.nombres, u.apellidos, u.correo, u.autorizacion, r.nombre_rol FROM usuarios u 
-JOIN rol r ON u.F_rol = r.id 
-WHERE u.F_rol <> 5";
+$sql = "SELECT u.id, u.nombres, u.apellidos, u.correo, u.autorizacion, c.nombre_cargo FROM usuarios u 
+JOIN cargo c ON u.F_cargo = c.id 
+WHERE u.id <> ".$IDUsuario." AND u.activo = 1";
 $sentencia = $base_de_datos->prepare($sql);
 $sentencia->execute(); 
 $registro = $sentencia->fetchAll(PDO::FETCH_ASSOC);
@@ -64,7 +65,7 @@ $HoraExtra_Piloto = $registro2[1]["precio"];
                         <td><?php echo $reg["nombres"] ?></td>
                         <td><?php echo $reg["apellidos"] ?></td>
                         <td><?php echo $reg["correo"] ?></td>
-                        <td><?php echo $reg["nombre_rol"] ?></td>
+                        <td><?php echo $reg["nombre_cargo"] ?></td>
                         <?php 
                         $Checked = "";
                         if($reg["autorizacion"] == 1){

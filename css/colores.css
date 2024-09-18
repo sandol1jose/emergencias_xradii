@@ -1,0 +1,20 @@
+:root {
+    --color-primario: #1F3DDE;
+    --color-primario-hover: #2E7DF4;
+
+    --color-secundario: #2E2E2E;
+    --color-secundario-1: #797979; /*Para hover de botones*/
+    --color-secundario-2: #DFDFDF; 
+    --color-secundario-3: #BBBBBB; /*Contornos de lineas, etc*/
+    --color-disabled: #575757; /*Para bonotes deshabilitados*/
+
+    --blanco: #ffffff;
+
+    --amarillo: #FFE600;
+    --rojo: #ff0000;
+}
+
+/*
+    var(--color-secundario-2);
+    #([0-9a-fA-F]{6})
+*/

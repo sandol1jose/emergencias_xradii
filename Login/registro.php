@@ -12,6 +12,18 @@ session_start();
 <body>
 
 
+<?php
+//Consultado los cargos
+$ruta = dirname( __FILE__ ) . '/../conexion.php';
+include $ruta;
+
+$sql = "SELECT id, nombre_cargo FROM cargo";
+$sentencia = $base_de_datos->prepare($sql);
+$sentencia->execute(); 
+$cargos = $sentencia->fetchAll(PDO::FETCH_ASSOC);
+?>
+
+
 <div class="base">
 	<div class="contenedor">
 		<span>Registrarse</span>
@@ -24,12 +36,11 @@ session_start();
 			
 			<input class="InputGeneral" type="text" id="apellidos" name="apellidos" placeholder="Apellidos" utocomplete="off" required><br>
 			
-			<select name="rol" id="rol">
+			<select name="cargo" id="cargo">
 				<option value="0" selected>¿Cuál es tu cargo?</option>
-				<option value="1">Técnico</option>
-				<option value="2">Administrador</option>
-				<!--<option value="3">Radiólogo</option>-->
-				<option value="4">Piloto</option>
+				<?php foreach ($cargos as $cargo): ?>
+					<option value="<?php echo $cargo['id']; ?>"><?php echo $cargo['nombre_cargo']; ?></option>
+				<?php endforeach; ?>
 			</select><br>
 			<input class="InputGeneral" placeholder="Nombre de usuario" type="text" name="username" id="username" autocomplete="off" spellcheck="false" required><br>
 

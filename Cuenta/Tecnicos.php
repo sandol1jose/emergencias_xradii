@@ -20,9 +20,9 @@ $Titulo = "Listado de técnicos";
 $ruta = dirname( __FILE__ ) . '/../conexion.php';
 include $ruta;
 
-$sql = "SELECT u.id, u.nombres, u.apellidos, u.correo, r.nombre_rol FROM usuarios u 
-JOIN rol r ON u.F_rol = r.id 
-WHERE u.F_rol NOT IN (5, 6) AND u.apellidos != 'Prueba';";
+$sql = "SELECT u.id, u.nombres, u.apellidos, u.correo, c.nombre_cargo FROM usuarios u 
+JOIN cargo c ON u.F_cargo = c.id 
+WHERE u.activo != 0 AND u.apellidos != 'Prueba';";
 $sentencia = $base_de_datos->prepare($sql);
 $sentencia->execute(); 
 $registro = $sentencia->fetchAll(PDO::FETCH_ASSOC);
@@ -60,7 +60,7 @@ $registro = $sentencia->fetchAll(PDO::FETCH_ASSOC);
                         <th class="">Nombres</th>
                         <th class="">Apellidos</th>
                         <th class="">Correo</th>
-                        <th class="tdfecha">Rol</th>
+                        <th class="tdfecha">Cargo</th>
                         <th class="tdfecha">ver</th>
                     </tr>
                 </thead>
@@ -78,7 +78,7 @@ $registro = $sentencia->fetchAll(PDO::FETCH_ASSOC);
                                     <?php echo $valor["correo"]; ?>
                                 </td>
                                 <td>
-                                    <?php echo $valor["nombre_rol"]; ?>
+                                    <?php echo $valor["nombre_cargo"]; ?>
                                 </td>
                                 <td>
                                     <button class="btnView" onclick="VerUsuario(<?php echo $valor['id'];?>);">

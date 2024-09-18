@@ -4,15 +4,15 @@
 	include '../conexion.php';
 	//include 'EnviarCorreo.php';
 
-	if($_POST["rol"] == 0){
-		$_SESSION["Alerta"] = "RolIncorrecto";
+	if($_POST["cargo"] == 0){
+		$_SESSION["Alerta"] = "CargpIncorrecto";
 		header('Location: ../Login/registro.php'); //envia a la página de inicio.
 		exit();
 	}
 
 	$Nombres = ucwords(strtolower($_POST["nombres"])); //Primera letra mayuscula
     $Apellidos = ucwords(strtolower($_POST["apellidos"])); //Primera letra mayuscula
-    $Rol = $_POST["rol"];
+    $Cargo = $_POST["cargo"];
 	$username = strtolower($_POST["username"]);//Convirtiendo todo el username a minusculas
     $Correo = strtolower($_POST["correo"]);//Convirtiendo todo el correo a minusculas
 
@@ -27,7 +27,7 @@
 		$Pass = $_POST["pass"];
 		$PassCifrada = password_hash($Pass, PASSWORD_DEFAULT); //Encriptando contraseñas
 		$sentencia = $base_de_datos->prepare("CALL NuevoUsuario(?,?,?,?,?,?);");
-		$resultado = $sentencia->execute([$Nombres, $Apellidos, $username, $Correo, $PassCifrada, $Rol]);
+		$resultado = $sentencia->execute([$Nombres, $Apellidos, $username, $Correo, $PassCifrada, $Cargo]);
 			
 		if($resultado == true){
 			//SE AGREGO CORRECTAMENTE AL CLIENTE
