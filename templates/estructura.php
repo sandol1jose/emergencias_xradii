@@ -1,6 +1,14 @@
 <?php
+    if($_SESSION['Usuario']["Rol"] == -1){
+        header('Location: '.$Servidor.'/Login/seleccionarRol.php');
+    }
+?>
+
+
+<?php
 $RolUsuario = $_SESSION['Usuario']['Rol'];
 ?>
+
 
 <div class="Menu" id="Menu">
     <div class="menus" id="menus">

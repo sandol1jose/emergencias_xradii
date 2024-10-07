@@ -1,14 +1,14 @@
 <?php
 #ENCABEZADO PARA PRODUCCION
-/*date_default_timezone_set('America/Guatemala');
+date_default_timezone_set('America/Guatemala');
 $ip = "https://emergencias.x-radii.com/";
-$Servidor = $ip.'';*/
+$Servidor = $ip.'';
 
 
 #ENCABEZADO PARA HACER PRUEBAS EN LOCAL
-date_default_timezone_set('America/Guatemala');
+/*date_default_timezone_set('America/Guatemala');
 $ip = "http://localhost";
-$Servidor = $ip.'/xradii/Emergencias';
+$Servidor = $ip.'/xradii/Emergencias';*/
 ?>
 
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>

@@ -21,6 +21,7 @@ if(!isset($_SESSION['UsuarioConsulta'])){
 }
 
 
+/*
 $ruta = dirname( __FILE__ ) . '/../conexion.php';
 include $ruta;
 $Rol = $_SESSION['Usuario']["Rol"];
@@ -40,6 +41,62 @@ if(count($registro) == 1){
     $Rol_Usuario_Emergencia = $registro[0]["Rol_Usuario_Emergencia"];
     $_SESSION['Rol_Usuario_Emergencia'] = $Rol_Usuario_Emergencia;
 }else{
+    header('Location: Tecnicos.php');
+}*/
+
+$ruta = dirname( __FILE__ ) . '/../conexion.php';
+include $ruta;
+$Rol = $_SESSION['Usuario']["Rol"];
+
+
+$sql = "
+    SELECT e.f_estado, r.id AS Rol_Usuario_Emergencia 
+    FROM emergencia e
+    JOIN usuarios u ON u.id = e.f_usuario 
+    JOIN usuarios_rol ur ON ur.F_usuario = u.id 
+    JOIN rol r ON r.id = ur.F_rol 
+    WHERE e.id = :emergenciaId 
+    AND e.f_usuario = :usuarioId
+";
+
+
+$sentencia = $base_de_datos->prepare($sql);
+$sentencia->bindParam(':emergenciaId', $_GET['id'], PDO::PARAM_INT);
+$sentencia->bindParam(':usuarioId', $_SESSION['IDUsuario'], PDO::PARAM_INT);
+$sentencia->execute(); 
+
+
+$registro = $sentencia->fetchAll(PDO::FETCH_ASSOC);
+
+
+if(count($registro) >= 1){
+    $EstadoEmergencia = $registro[0]["f_estado"];
+    
+    // Variable de Session que almacena el Rol del usuario propietario de la Emergencia
+    unset($_SESSION['Rol_Usuario_Emergencia']);
+    //$Rol_Usuario_Emergencia = $registro[0]["Rol_Usuario_Emergencia"];
+    //$_SESSION['Rol_Usuario_Emergencia'] = $Rol_Usuario_Emergencia;
+
+    // Verificar si el rol 4 está entre los roles asignados
+    $rolExists = false;
+    foreach ($registro as $rol) {
+        if ($rol['Rol_Usuario_Emergencia'] == 4) {
+            $rolExists = true;
+            break; // Salir del bucle si se encuentra el rol
+        }
+    }
+
+    // Realizar acciones basadas en si el rol existe o no
+    if ($rolExists) {
+        // El rol 4 está asignado al usuario propietario de la emergencia
+        $_SESSION['Rol_Usuario_Emergencia'] = 4;
+        $Rol_Usuario_Emergencia = 4;
+    } else {
+        // El rol 4 NO está asignado al usuario
+        $_SESSION['Rol_Usuario_Emergencia'] = 0; //Se le asigna 0 quiere decir que tieen otro rol asigando que no es piloto
+        $Rol_Usuario_Emergencia = 0;
+    }
+} else {
     header('Location: Tecnicos.php');
 }
 

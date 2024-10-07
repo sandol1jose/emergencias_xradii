@@ -1,0 +1,6 @@
+Procedimiento almacenado NuevaEmergencia
+Procedimiento almacenado UpdateEmergencia
+Procedimiento almacenado UpdateEmergencia_Admin
+Procedimiento almacenado NuevoUsuario
+
+Nueva tabla usuario-rol
