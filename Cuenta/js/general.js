@@ -67,7 +67,7 @@ function FormatearFecha(fecha){
 }
 
 //Calcula las horas aproximadas
-function CalcularHoras(Fecha, horaInicio, HoraFin){
+function CalcularHorasAproximadas(Fecha, horaInicio, HoraFin){
     var fechaInicio = new Date(Fecha + " " + horaInicio).getTime();
     var fechaFin    = new Date(Fecha + " " + HoraFin).getTime();
     var diff = fechaFin - fechaInicio;
@@ -76,6 +76,14 @@ function CalcularHoras(Fecha, horaInicio, HoraFin){
     return horas;
 }
 
+//Calcula las horas sin aproximar
+function CalcularHoras(Fecha, horaInicio, HoraFin) {
+    var fechaInicio = new Date(Fecha + " " + horaInicio).getTime();
+    var fechaFin = new Date(Fecha + " " + HoraFin).getTime();
+    var diff = fechaFin - fechaInicio;
+    var horas = diff / (1000 * 60 * 60); // convierte milisegundos a horas
+    return horas.toFixed(2); // asegura que el resultado tenga 4 decimales
+}
 
 
 

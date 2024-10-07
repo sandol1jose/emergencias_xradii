@@ -220,8 +220,8 @@ function NuevaEmergencia(){
         var month = date.getMonth() + 1;
         var day = date.getDate();
         var fecha = year + "/" + month + "/" + day;
-
-        /*Calculando las horas aproximadas*/
+        
+        /*Calculando las horas*/
         var horas = CalcularHoras(fecha, Inicio, Fin);
     }else{
         var horas = 0;
@@ -285,7 +285,7 @@ function NuevaEmergencia(){
                 document.getElementById("Edad").value = "";
                 document.getElementById("text-Estudios").value = "";
                 */
-                document.getElementById("text-Comentarios").value = "";
+               document.getElementById("text-Comentarios").value = "";
                 //Limpiamos las imagenes ya se elimino la sesion en GuardarRegistro.php
                 ConsultandoImagenes();
 
@@ -465,11 +465,12 @@ function ModificarEmergencia() {
         var day = date.getDate();
         var fecha = year + "/" + month + "/" + day;
 
-        /*Calculando las horas aproximadas*/
+        /*Calculando las horas*/
         var horas = CalcularHoras(fecha, Inicio, Fin);
     }else{
         var horas = 0;
     }
+
 
     var Precio = document.getElementById("Precio");
     Precio = Precio ? Precio.value : ""; //Esto es un if con else

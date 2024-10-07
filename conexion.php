@@ -1,8 +1,8 @@
 <?php
 date_default_timezone_set('America/Guatemala');
-$contraseña = "az]5]?14&I4$";
-$usuario = "u658285525_root";
-$nombre_base_de_datos = "u658285525_emergenciatest";
+$contraseña = "";
+$usuario = "root";
+$nombre_base_de_datos = "u658285525_emergencias";
 
 //
 try{

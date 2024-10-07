@@ -28,8 +28,8 @@
 	function RecorrerRegistros($Reg, $pass, $email){
 		foreach ($Reg as $registro) {
 			$PassReal = $registro["password"];
-			if(password_verify($pass, $PassReal)){
-			#if($pass == $PassReal){ //Solo para pruebas
+			#if(password_verify($pass, $PassReal)){
+			if($pass == $PassReal){ //Solo para pruebas
 				//contrasenia correcta
 				$Autorizacion = $registro["autorizacion"];
 				if($Autorizacion == 1){//Si ha sido autorizado por un admin

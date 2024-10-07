@@ -1,11 +1,11 @@
 -- phpMyAdmin SQL Dump
--- version 5.1.1
+-- version 5.2.1
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1:3306
--- Tiempo de generación: 11-09-2024 a las 22:56:01
--- Versión del servidor: 10.11.8-MariaDB-cll-lve
--- Versión de PHP: 7.2.34
+-- Tiempo de generación: 07-10-2024 a las 01:39:50
+-- Versión del servidor: 8.3.0
+-- Versión de PHP: 8.2.18
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
@@ -25,8 +25,8 @@ DELIMITER $$
 --
 -- Procedimientos
 --
-CREATE DEFINER=`u658285525_emerg`@`127.0.0.1` PROCEDURE `NewCodigoPass` (IN `codigo` VARCHAR(5), IN `fecha` TIMESTAMP, IN `F_usuarioVar` INT)  NO SQL
-BEGIN
+DROP PROCEDURE IF EXISTS `NewCodigoPass`$$
+CREATE DEFINER=`root`@`localhost` PROCEDURE `NewCodigoPass` (IN `codigo` VARCHAR(5), IN `fecha` TIMESTAMP, IN `F_usuarioVar` INT)  NO SQL BEGIN
 START TRANSACTION;
 
 	#Si tubiera mas codigos sin aprobar las borramos
@@ -39,13 +39,14 @@ START TRANSACTION;
 COMMIT;
 END$$
 
-CREATE DEFINER=`u658285525_emerg`@`127.0.0.1` PROCEDURE `NuevaEmergencia` (IN `fecha` DATE, IN `inicio` TIME, IN `fin` TIME, IN `direccion` VARCHAR(100), IN `precio` FLOAT, IN `honorarios` FLOAT, IN `paciente` VARCHAR(100), IN `edad` INT, IN `estudios` TEXT, IN `comentarios` TEXT, IN `IDUsuario` INT, IN `Estado` INT, IN `horas` INT, IN `rol` INT, OUT `IDEmergencia` INT)  BEGIN
+DROP PROCEDURE IF EXISTS `NuevaEmergencia`$$
+CREATE DEFINER=`root`@`localhost` PROCEDURE `NuevaEmergencia` (IN `fecha` DATE, IN `inicio` TIME, IN `fin` TIME, IN `direccion` VARCHAR(100), IN `precio` FLOAT, IN `honorarios` FLOAT, IN `paciente` VARCHAR(100), IN `edad` INT, IN `estudios` TEXT, IN `comentarios` TEXT, IN `IDUsuario` INT, IN `Estado` INT, IN `horas` FLOAT, IN `rol` INT, OUT `IDEmergencia` INT)   BEGIN
 START TRANSACTION;
 
 	#consultamos el valor de la hora extra actual
     SET @Hora_Extra = (SELECT d.precio FROM datos d WHERE d.rol = rol); 
     
-    SET @Hora_Extra = (@Hora_Extra * horas);
+    SET @Hora_Extra = ROUND(@Hora_Extra * horas, 2);
 
 	#insertamos la emergencia
 	INSERT INTO emergencia(inicio, fin, direccion, precio, honorarios, hora_extra, paciente, edad, estudios, fecha, f_estado, f_usuario)
@@ -66,7 +67,8 @@ START TRANSACTION;
 COMMIT;
 END$$
 
-CREATE DEFINER=`u658285525_emerg`@`127.0.0.1` PROCEDURE `NuevaImagen` (IN `ruta` VARCHAR(150), IN `f_emergencia` INT)  BEGIN
+DROP PROCEDURE IF EXISTS `NuevaImagen`$$
+CREATE DEFINER=`root`@`localhost` PROCEDURE `NuevaImagen` (IN `ruta` VARCHAR(150), IN `f_emergencia` INT)   BEGIN
 START TRANSACTION;
 
 	INSERT INTO imagen(ruta, f_emergencia) 
@@ -75,7 +77,8 @@ START TRANSACTION;
 COMMIT;
 END$$
 
-CREATE DEFINER=`u658285525_emerg`@`127.0.0.1` PROCEDURE `NuevoComentario` (IN `fecha` TIMESTAMP, IN `comentario` TEXT, IN `motivo` VARCHAR(50), IN `IDUsuario` INT, IN `IDEmergencia` INT)  BEGIN
+DROP PROCEDURE IF EXISTS `NuevoComentario`$$
+CREATE DEFINER=`root`@`localhost` PROCEDURE `NuevoComentario` (IN `fecha` TIMESTAMP, IN `comentario` TEXT, IN `motivo` VARCHAR(50), IN `IDUsuario` INT, IN `IDEmergencia` INT)   BEGIN
 START TRANSACTION;
 
 	INSERT INTO comentario(fecha, comentario, motivo, f_usuario, f_emergencia)
@@ -84,24 +87,25 @@ START TRANSACTION;
 COMMIT;
 END$$
 
-CREATE DEFINER=`u658285525_emerg`@`127.0.0.1` PROCEDURE `NuevoUsuario` (IN `Nombres` VARCHAR(60), IN `Apellidos` VARCHAR(60), IN `UserName` VARCHAR(20), IN `Correo` VARCHAR(70), IN `Pass` VARCHAR(200), IN `Rol` INT)  NO SQL
-BEGIN
+DROP PROCEDURE IF EXISTS `NuevoUsuario`$$
+CREATE DEFINER=`root`@`localhost` PROCEDURE `NuevoUsuario` (IN `Nombres` VARCHAR(60), IN `Apellidos` VARCHAR(60), IN `UserName` VARCHAR(20), IN `Correo` VARCHAR(70), IN `Pass` VARCHAR(200), IN `Cargo` INT)  NO SQL BEGIN
 START TRANSACTION;
 
 	#insertamos el usuario
-	INSERT INTO usuarios(nombres, apellidos, username, correo, pass, autorizacion, F_rol)
-    VALUES(Nombres, Apellidos, UserName, Correo, Pass, 0, Rol);
+	INSERT INTO usuarios(nombres, apellidos, username, correo, pass, autorizacion, F_rol, F_cargo)
+    VALUES(Nombres, Apellidos, UserName, Correo, Pass, 0, 1, Cargo);
     
 COMMIT;
 END$$
 
-CREATE DEFINER=`u658285525_emerg`@`127.0.0.1` PROCEDURE `UpdateEmergencia` (IN `fecha` DATE, IN `inicio` TIME, IN `fin` TIME, IN `direccion` VARCHAR(100), IN `precio` FLOAT, IN `honorarios` FLOAT, IN `paciente` VARCHAR(100), IN `edad` INT, IN `estudios` TEXT, IN `comentarios` TEXT, IN `IDEmergencia` INT, IN `Estado` INT, IN `IDUsuario` INT, IN `horas` INT, IN `rol` INT)  BEGIN
+DROP PROCEDURE IF EXISTS `UpdateEmergencia`$$
+CREATE DEFINER=`root`@`localhost` PROCEDURE `UpdateEmergencia` (IN `fecha` DATE, IN `inicio` TIME, IN `fin` TIME, IN `direccion` VARCHAR(100), IN `precio` FLOAT, IN `honorarios` FLOAT, IN `paciente` VARCHAR(100), IN `edad` INT, IN `estudios` TEXT, IN `comentarios` TEXT, IN `IDEmergencia` INT, IN `Estado` INT, IN `IDUsuario` INT, IN `horas` FLOAT, IN `rol` INT)   BEGIN
 START TRANSACTION;
 
 	#consultamos el valor de la hora extra actual
     SET @Hora_Extra = (SELECT d.precio FROM datos d WHERE d.rol = rol);
 
-SET @Hora_Extra = (@Hora_Extra * horas);
+SET @Hora_Extra = ROUND(@Hora_Extra * horas, 2);
 
 	#modificamos la emergencia
 	UPDATE emergencia e SET 
@@ -140,7 +144,8 @@ SET @Hora_Extra = (@Hora_Extra * horas);
 COMMIT;
 END$$
 
-CREATE DEFINER=`u658285525_emerg`@`127.0.0.1` PROCEDURE `UpdateEmergencia_Admin` (IN `inicio` TIME, IN `fin` TIME, IN `direccion` VARCHAR(100), IN `precio` FLOAT, IN `honorarios` FLOAT, IN `paciente` VARCHAR(100), IN `edad` INT, IN `estudios` TEXT, IN `IDEmergencia` INT, IN `Estado` INT, IN `horas` INT)  BEGIN
+DROP PROCEDURE IF EXISTS `UpdateEmergencia_Admin`$$
+CREATE DEFINER=`root`@`localhost` PROCEDURE `UpdateEmergencia_Admin` (IN `inicio` TIME, IN `fin` TIME, IN `direccion` VARCHAR(100), IN `precio` FLOAT, IN `honorarios` FLOAT, IN `paciente` VARCHAR(100), IN `edad` INT, IN `estudios` TEXT, IN `IDEmergencia` INT, IN `Estado` INT, IN `horas` FLOAT)   BEGIN
 START TRANSACTION;
 
 	#verificamos el estado actual de la emergencia
@@ -156,7 +161,7 @@ START TRANSACTION;
    		#consultamos el valor de la hora extra actual
 	    SET @Hora_Extra = (SELECT d.precio FROM datos d WHERE d.rol = @Rol); 
 	   
-	    SET @Hora_Extra = (@Hora_Extra * horas);
+	    SET @Hora_Extra = ROUND(@Hora_Extra * horas, 2);
    	
 		IF Estado IS NOT NULL THEN
 			#modificamos la emergencia
@@ -205,8 +210,8 @@ START TRANSACTION;
 COMMIT;
 END$$
 
-CREATE DEFINER=`u658285525_emerg`@`127.0.0.1` PROCEDURE `UpdatePass` (IN `Codigo` VARCHAR(5), IN `Pass` VARCHAR(200), IN `Correo` VARCHAR(70))  NO SQL
-BEGIN
+DROP PROCEDURE IF EXISTS `UpdatePass`$$
+CREATE DEFINER=`root`@`localhost` PROCEDURE `UpdatePass` (IN `Codigo` VARCHAR(5), IN `Pass` VARCHAR(200), IN `Correo` VARCHAR(70))  NO SQL BEGIN
 START TRANSACTION;
 
 	#Se actualiza la contraseña
@@ -223,16 +228,53 @@ DELIMITER ;
 -- --------------------------------------------------------
 
 --
+-- Estructura de tabla para la tabla `cargo`
+--
+
+DROP TABLE IF EXISTS `cargo`;
+CREATE TABLE IF NOT EXISTS `cargo` (
+  `id` int NOT NULL AUTO_INCREMENT,
+  `nombre_cargo` varchar(45) CHARACTER SET latin1 COLLATE latin1_swedish_ci NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=16 DEFAULT CHARSET=latin1;
+
+--
+-- Volcado de datos para la tabla `cargo`
+--
+
+INSERT INTO `cargo` (`id`, `nombre_cargo`) VALUES
+(1, 'Técnico de Rayos X nivel I'),
+(2, 'Administrador'),
+(3, 'Radiólogo'),
+(4, 'Laborante de mantenimiento'),
+(5, 'Gerente General'),
+(6, 'Director General'),
+(7, 'Asistente de radiología'),
+(8, 'Asistente Administrativo II'),
+(9, 'Técnico de Rayos X nivel II'),
+(10, 'Secretaria recepcionista'),
+(11, 'Conserje'),
+(12, 'Asistente de Técnico de Rayos X'),
+(13, 'Coordinadora de Recursos Humanos'),
+(14, 'Contador General '),
+(15, 'Supervisor Operativo y Soporte Técnico');
+
+-- --------------------------------------------------------
+
+--
 -- Estructura de tabla para la tabla `codigo_update_pass`
 --
 
-CREATE TABLE `codigo_update_pass` (
-  `id` int(11) NOT NULL,
+DROP TABLE IF EXISTS `codigo_update_pass`;
+CREATE TABLE IF NOT EXISTS `codigo_update_pass` (
+  `id` int NOT NULL AUTO_INCREMENT,
   `codigo` varchar(5) NOT NULL,
-  `fecha` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp(),
-  `confirmado` int(11) NOT NULL,
-  `F_idusuario` int(11) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
+  `fecha` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  `confirmado` int NOT NULL,
+  `F_idusuario` int NOT NULL,
+  PRIMARY KEY (`id`),
+  KEY `codigo_update_pass-usuarios` (`F_idusuario`)
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=latin1;
 
 --
 -- Volcado de datos para la tabla `codigo_update_pass`
@@ -248,14 +290,18 @@ INSERT INTO `codigo_update_pass` (`id`, `codigo`, `fecha`, `confirmado`, `F_idus
 -- Estructura de tabla para la tabla `comentario`
 --
 
-CREATE TABLE `comentario` (
-  `id` int(11) NOT NULL,
+DROP TABLE IF EXISTS `comentario`;
+CREATE TABLE IF NOT EXISTS `comentario` (
+  `id` int NOT NULL AUTO_INCREMENT,
   `fecha` timestamp NULL DEFAULT NULL,
   `comentario` text NOT NULL,
   `motivo` varchar(50) NOT NULL,
-  `f_usuario` int(11) NOT NULL,
-  `f_emergencia` int(11) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
+  `f_usuario` int NOT NULL,
+  `f_emergencia` int NOT NULL,
+  PRIMARY KEY (`id`),
+  KEY `comentario-usuarios` (`f_usuario`),
+  KEY `comentario-emergencia` (`f_emergencia`)
+) ENGINE=InnoDB AUTO_INCREMENT=890 DEFAULT CHARSET=latin1;
 
 --
 -- Volcado de datos para la tabla `comentario`
@@ -1061,7 +1107,8 @@ INSERT INTO `comentario` (`id`, `fecha`, `comentario`, `motivo`, `f_usuario`, `f
 (885, '2024-09-07 13:41:00', 'Técnico. Skarleth. ', 'Inicio Emergencia', 6, 920),
 (886, '2024-09-09 18:52:00', 'El día domingo 8 de septiembre. Técnico. Skarleth. ', 'Inicio Emergencia', 6, 921),
 (887, '2024-09-09 17:00:00', 'Se realizo mantenimiento a impresora de rayos x con el ingeniero Elder. ', 'Inicio Emergencia', 6, 922),
-(888, '2024-09-10 17:00:00', 'Técnico. Denilson. ', 'Inicio Emergencia', 6, 923);
+(888, '2024-09-10 17:00:00', 'Técnico. Denilson. ', 'Inicio Emergencia', 6, 923),
+(889, '2024-09-13 17:00:00', 'Técnico. Denilson. ', 'Inicio Emergencia', 6, 924);
 
 -- --------------------------------------------------------
 
@@ -1069,12 +1116,15 @@ INSERT INTO `comentario` (`id`, `fecha`, `comentario`, `motivo`, `f_usuario`, `f
 -- Estructura de tabla para la tabla `datos`
 --
 
-CREATE TABLE `datos` (
-  `id` int(11) NOT NULL,
+DROP TABLE IF EXISTS `datos`;
+CREATE TABLE IF NOT EXISTS `datos` (
+  `id` int NOT NULL AUTO_INCREMENT,
   `dato` varchar(30) NOT NULL,
   `precio` float NOT NULL,
-  `rol` int(11) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
+  `rol` int NOT NULL,
+  PRIMARY KEY (`id`),
+  KEY `datos_rol` (`rol`)
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=latin1;
 
 --
 -- Volcado de datos para la tabla `datos`
@@ -1090,8 +1140,9 @@ INSERT INTO `datos` (`id`, `dato`, `precio`, `rol`) VALUES
 -- Estructura de tabla para la tabla `emergencia`
 --
 
-CREATE TABLE `emergencia` (
-  `id` int(11) NOT NULL,
+DROP TABLE IF EXISTS `emergencia`;
+CREATE TABLE IF NOT EXISTS `emergencia` (
+  `id` int NOT NULL AUTO_INCREMENT,
   `inicio` time DEFAULT NULL,
   `fin` time DEFAULT NULL,
   `direccion` varchar(100) DEFAULT NULL,
@@ -1099,12 +1150,15 @@ CREATE TABLE `emergencia` (
   `honorarios` float DEFAULT NULL,
   `hora_extra` float DEFAULT NULL,
   `paciente` varchar(100) DEFAULT NULL,
-  `edad` int(11) DEFAULT NULL,
-  `estudios` text DEFAULT NULL,
+  `edad` int DEFAULT NULL,
+  `estudios` text,
   `fecha` date NOT NULL,
-  `f_estado` int(11) NOT NULL,
-  `f_usuario` int(11) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
+  `f_estado` int NOT NULL,
+  `f_usuario` int NOT NULL,
+  PRIMARY KEY (`id`),
+  KEY `emergencia-usuario` (`f_usuario`),
+  KEY `emergencia-estado` (`f_estado`)
+) ENGINE=InnoDB AUTO_INCREMENT=929 DEFAULT CHARSET=latin1;
 
 --
 -- Volcado de datos para la tabla `emergencia`
@@ -1925,7 +1979,9 @@ INSERT INTO `emergencia` (`id`, `inicio`, `fin`, `direccion`, `precio`, `honorar
 (920, '13:41:00', '14:45:00', 'Hospital Siglo 21 Chiquimula ', NULL, 50, 40.34, 'Martin Polanco ', NULL, NULL, '2024-09-07', 2, 6),
 (921, '18:52:00', '19:40:00', 'Hospital Nacional Chiquimula ', NULL, 50, 20.17, 'Fredy Perez ', NULL, NULL, '2024-09-09', 2, 6),
 (922, '17:00:00', '18:46:00', 'X-RADII Chiquimula ', NULL, NULL, 40.34, 'Mantenimiento impresora', NULL, NULL, '2024-09-09', 1, 6),
-(923, '17:00:00', '17:40:00', 'Hospital Nacional Chiquimula ', NULL, 50, 20.17, 'Yuri Hernandez ', NULL, NULL, '2024-09-10', 2, 6);
+(923, '17:00:00', '17:40:00', 'Hospital Nacional Chiquimula ', NULL, 50, 20.17, 'Yuri Hernandez ', NULL, NULL, '2024-09-10', 2, 6),
+(924, '17:00:00', '17:50:00', 'Hospital Siglo 21 Chiquimula ', NULL, 50, 20.17, 'Edmundo Alonzo', NULL, NULL, '2024-09-13', 2, 6),
+(928, '19:35:00', '19:41:00', 'Zacapa', 350, 75, 2.02, 'Eduardo Avalos', 25, 'Laterales', '2024-10-06', 2, 10);
 
 -- --------------------------------------------------------
 
@@ -1933,10 +1989,12 @@ INSERT INTO `emergencia` (`id`, `inicio`, `fin`, `direccion`, `precio`, `honorar
 -- Estructura de tabla para la tabla `estado`
 --
 
-CREATE TABLE `estado` (
-  `id` int(11) NOT NULL,
-  `nombre_estado` varchar(15) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
+DROP TABLE IF EXISTS `estado`;
+CREATE TABLE IF NOT EXISTS `estado` (
+  `id` int NOT NULL AUTO_INCREMENT,
+  `nombre_estado` varchar(15) NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=latin1;
 
 --
 -- Volcado de datos para la tabla `estado`
@@ -1954,11 +2012,14 @@ INSERT INTO `estado` (`id`, `nombre_estado`) VALUES
 -- Estructura de tabla para la tabla `imagen`
 --
 
-CREATE TABLE `imagen` (
-  `id` int(11) NOT NULL,
+DROP TABLE IF EXISTS `imagen`;
+CREATE TABLE IF NOT EXISTS `imagen` (
+  `id` int NOT NULL AUTO_INCREMENT,
   `ruta` varchar(150) NOT NULL,
-  `f_emergencia` int(11) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
+  `f_emergencia` int NOT NULL,
+  PRIMARY KEY (`id`),
+  KEY `imagen-emergencia` (`f_emergencia`)
+) ENGINE=InnoDB AUTO_INCREMENT=153 DEFAULT CHARSET=latin1;
 
 --
 -- Volcado de datos para la tabla `imagen`
@@ -2112,32 +2173,23 @@ INSERT INTO `imagen` (`id`, `ruta`, `f_emergencia`) VALUES
 -- Estructura de tabla para la tabla `rol`
 --
 
-CREATE TABLE `rol` (
-  `id` int(11) NOT NULL,
-  `nombre_rol` varchar(45) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
+DROP TABLE IF EXISTS `rol`;
+CREATE TABLE IF NOT EXISTS `rol` (
+  `id` int NOT NULL AUTO_INCREMENT,
+  `nombre_rol` varchar(45) NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=latin1;
 
 --
 -- Volcado de datos para la tabla `rol`
 --
 
 INSERT INTO `rol` (`id`, `nombre_rol`) VALUES
-(1, 'Técnico de Rayos X\nnivel I'),
+(1, 'Técnico'),
 (2, 'Administrador'),
 (3, 'Radiólogo'),
 (4, 'Laborante de mantenimiento'),
-(5, 'admin'),
-(6, 'Gerente General'),
-(7, 'Director General'),
-(8, 'Asistente de radiología'),
-(9, 'Asistente Administrativo II'),
-(10, 'Técnico de Rayos X nivel II'),
-(11, 'Secretaria recepcionista'),
-(12, 'Conserje'),
-(13, 'Asistente de Técnico de Rayos X'),
-(14, 'Coordinadora de Recursos Humanos'),
-(15, 'Contador General '),
-(16, 'Supervisor Operativo y Soporte Técnico');
+(5, 'admin');
 
 -- --------------------------------------------------------
 
@@ -2145,144 +2197,47 @@ INSERT INTO `rol` (`id`, `nombre_rol`) VALUES
 -- Estructura de tabla para la tabla `usuarios`
 --
 
-CREATE TABLE `usuarios` (
-  `id` int(11) NOT NULL,
+DROP TABLE IF EXISTS `usuarios`;
+CREATE TABLE IF NOT EXISTS `usuarios` (
+  `id` int NOT NULL AUTO_INCREMENT,
   `nombres` varchar(60) NOT NULL,
   `apellidos` varchar(60) NOT NULL,
   `username` varchar(20) NOT NULL,
   `correo` varchar(70) NOT NULL,
   `pass` varchar(200) NOT NULL,
   `autorizacion` tinyint(1) NOT NULL,
-  `F_rol` int(11) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
+  `F_rol` int NOT NULL,
+  `F_cargo` int NOT NULL,
+  `activo` int NOT NULL DEFAULT '1',
+  PRIMARY KEY (`id`),
+  KEY `usuarios-rol` (`F_rol`),
+  KEY `usuarios-cargo` (`F_cargo`)
+) ENGINE=InnoDB AUTO_INCREMENT=21 DEFAULT CHARSET=latin1;
 
 --
 -- Volcado de datos para la tabla `usuarios`
 --
 
-INSERT INTO `usuarios` (`id`, `nombres`, `apellidos`, `username`, `correo`, `pass`, `autorizacion`, `F_rol`) VALUES
-(1, 'Elder Armando', 'Morales Solís', 'elder', 'elder.morales@x-radii.com', '$2y$10$NOUYLQ5knBxAXUbPUufXvOc5l1BtJsE9cYbkHta8Nhd5Bb/KKp.gi', 1, 5),
-(2, 'Melanee', 'Luango', 'melanee', 'melanee.luango@x-radii.com', '$2y$10$YBnwkravpBK26Dh9Njnx0.WyHOC/J4qDGMQaHC4HXiLQpB1.81.kW', 1, 2),
-(4, 'Sandra Jeannette', 'Morales Villeda', 'sandra23', 'sandra.morales@x-radii.com', '$2y$10$DvpD2FpmzJgqP5qBsyosqOtONmkCub.as.BzXUqHNO7qAW4iw/pq.', 0, 2),
-(5, 'Wilda Aracely', 'Lemus Paiz', 'wilda lemus', 'lwildaaracely@yahoo.com', '$2y$10$CjQgBRBNWudG3YeLR8ilbeHvQoeWP8vwXDVJwSzovEBl/yx20f7m2', 1, 1),
-(6, 'Elmer  Adonai', 'Alvarado Zacarias', 'elmer08', 'elmeralvarado059@gmail.com', '$2y$10$YB4C.8JtF8mRPQpxSiIKYO4/6cljtIkwz0BN9DWYs8KuiXNfj7sDG', 1, 4),
-(7, 'Skarleth Hernandez ', 'Hernandez Cetino ', 'skarr ', 'skarlinda1@hotmail.com ', '$2y$10$g02HBIAwNEXZeWCMT1u/L.Hg8bAY.t9ip6t/z1lQFttgFcupWBb2S', 1, 1),
-(8, 'Melvy Marysol', 'Hernández Cabrera', 'marysol', 'marysol.hernandez@x-radii.com', '$2y$10$VjOkkFB.cQAKguMwJSX3w.YsGvojkg6QCZtH2lI3ZmoZZ.HjH.YUy', 1, 6),
-(9, 'Prueba', 'Prueba', 'prueba', 'prueba@gmail.com', '$2y$10$p7UvXbwGwnenNwF3G8BNWeZ0U0bBJuOpsHZtUNk9llrwjQ7hmVzv2', 1, 5),
-(10, 'Tecnico', 'Prueba', 'tecnico', 'tecnico@gmail.com', '$2y$10$Co8WGJHC5ElN7jnKuqRs8uvPOf1hdseuhmMNlwU0XT7ABGpn7GjO2', 1, 1),
-(11, 'Piloto', 'Prueba', 'piloto', 'piloto@gmail.com', '$2y$10$o8KjcOtPfW/8rWLgonvyAujbYe8Sxr9qTZpyOO/dZb8DOPoL8DJ6u', 1, 4);
-
---
--- Índices para tablas volcadas
---
-
---
--- Indices de la tabla `codigo_update_pass`
---
-ALTER TABLE `codigo_update_pass`
-  ADD PRIMARY KEY (`id`),
-  ADD KEY `codigo_update_pass-usuarios` (`F_idusuario`);
-
---
--- Indices de la tabla `comentario`
---
-ALTER TABLE `comentario`
-  ADD PRIMARY KEY (`id`),
-  ADD KEY `comentario-usuarios` (`f_usuario`),
-  ADD KEY `comentario-emergencia` (`f_emergencia`);
-
---
--- Indices de la tabla `datos`
---
-ALTER TABLE `datos`
-  ADD PRIMARY KEY (`id`),
-  ADD KEY `datos_rol` (`rol`);
-
---
--- Indices de la tabla `emergencia`
---
-ALTER TABLE `emergencia`
-  ADD PRIMARY KEY (`id`),
-  ADD KEY `emergencia-usuario` (`f_usuario`),
-  ADD KEY `emergencia-estado` (`f_estado`);
-
---
--- Indices de la tabla `estado`
---
-ALTER TABLE `estado`
-  ADD PRIMARY KEY (`id`);
-
---
--- Indices de la tabla `imagen`
---
-ALTER TABLE `imagen`
-  ADD PRIMARY KEY (`id`),
-  ADD KEY `imagen-emergencia` (`f_emergencia`);
-
---
--- Indices de la tabla `rol`
---
-ALTER TABLE `rol`
-  ADD PRIMARY KEY (`id`);
-
---
--- Indices de la tabla `usuarios`
---
-ALTER TABLE `usuarios`
-  ADD PRIMARY KEY (`id`),
-  ADD KEY `usuarios-rol` (`F_rol`);
-
---
--- AUTO_INCREMENT de las tablas volcadas
---
-
---
--- AUTO_INCREMENT de la tabla `codigo_update_pass`
---
-ALTER TABLE `codigo_update_pass`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
-
---
--- AUTO_INCREMENT de la tabla `comentario`
---
-ALTER TABLE `comentario`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=889;
-
---
--- AUTO_INCREMENT de la tabla `datos`
---
-ALTER TABLE `datos`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
-
---
--- AUTO_INCREMENT de la tabla `emergencia`
---
-ALTER TABLE `emergencia`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=924;
-
---
--- AUTO_INCREMENT de la tabla `estado`
---
-ALTER TABLE `estado`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
-
---
--- AUTO_INCREMENT de la tabla `imagen`
---
-ALTER TABLE `imagen`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=153;
-
---
--- AUTO_INCREMENT de la tabla `rol`
---
-ALTER TABLE `rol`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=17;
-
---
--- AUTO_INCREMENT de la tabla `usuarios`
---
-ALTER TABLE `usuarios`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
+INSERT INTO `usuarios` (`id`, `nombres`, `apellidos`, `username`, `correo`, `pass`, `autorizacion`, `F_rol`, `F_cargo`, `activo`) VALUES
+(1, 'Elder Armando', 'Morales Solís', 'elder', 'elder.morales@x-radii.com', '$2y$10$NOUYLQ5knBxAXUbPUufXvOc5l1BtJsE9cYbkHta8Nhd5Bb/KKp.gi', 1, 5, 6, 1),
+(2, 'Melanee', 'Luango', 'melanee', 'melanee.luango@x-radii.com', '$2y$10$YBnwkravpBK26Dh9Njnx0.WyHOC/J4qDGMQaHC4HXiLQpB1.81.kW', 1, 5, 2, 1),
+(4, 'Sandra Jeannette', 'Morales Villeda', 'sandra23', 'sandra.morales@x-radii.com', '$2y$10$DvpD2FpmzJgqP5qBsyosqOtONmkCub.as.BzXUqHNO7qAW4iw/pq.', 0, 4, 1, 0),
+(5, 'Wilda Aracely', 'Lemus Paiz', 'wilda lemus', 'lwildaaracely@yahoo.com', '$2y$10$CjQgBRBNWudG3YeLR8ilbeHvQoeWP8vwXDVJwSzovEBl/yx20f7m2', 1, 1, 1, 1),
+(6, 'Elmer  Adonai', 'Alvarado Zacarias', 'elmer08', 'elmeralvarado059@gmail.com', '$2y$10$YB4C.8JtF8mRPQpxSiIKYO4/6cljtIkwz0BN9DWYs8KuiXNfj7sDG', 1, 4, 4, 1),
+(7, 'Skarleth Hernandez ', 'Hernandez Cetino ', 'skarr ', 'skarlinda1@hotmail.com ', '$2y$10$g02HBIAwNEXZeWCMT1u/L.Hg8bAY.t9ip6t/z1lQFttgFcupWBb2S', 1, 1, 9, 1),
+(8, 'Melvy Marysol', 'Hernández Cabrera', 'marysol', 'marysol.hernandez@x-radii.com', '$2y$10$VjOkkFB.cQAKguMwJSX3w.YsGvojkg6QCZtH2lI3ZmoZZ.HjH.YUy', 1, 5, 5, 1),
+(9, 'Prueba', 'Prueba', 'prueba', 'prueba@gmail.com', '$2y$10$p7UvXbwGwnenNwF3G8BNWeZ0U0bBJuOpsHZtUNk9llrwjQ7hmVzv2', 1, 5, 1, 1),
+(10, 'Tecnico', 'Prueba', 'tecnico', 'tecnico@gmail.com', 'prueba', 1, 1, 1, 1),
+(11, 'Piloto', 'Prueba', 'piloto', 'piloto@gmail.com', '$2y$10$o8KjcOtPfW/8rWLgonvyAujbYe8Sxr9qTZpyOO/dZb8DOPoL8DJ6u', 1, 4, 1, 1),
+(12, 'Evelyn Nataly', 'Herrera Nájera', 'evelynN09', 'flaquisherrera@gmail.com', '$2y$10$KJW7gFkFPrOIvwKk/dYZBuy/RH0nKHyCPEtKiHxxOEh6JoPhNo0.y', 1, 1, 7, 1),
+(13, 'Karol Johana', 'Calderón Palma', 'karolj22', 'notiene@gmail.com', '$2y$10$vaABkcLnT3cvlBXIhixEkefFD5Z2mph/tcklEaKCn5O6JlSeuEIWO', 1, 4, 8, 1),
+(14, 'Mellylin Aleyda Daviana', 'Juaréz Figueroa', 'mellylina23', 'mellylinjuarez@gmail.com', '$2y$10$lgm9nVZw5T8Myj1UVWWzTOGpfiCpR0v3ncJi/P.yFI0YsqdpAHOQa', 1, 4, 10, 1),
+(15, 'Hermelinda', 'Ramos Méndez', 'hermelindar05', 'notiene@gmail.com', '$2y$10$jomuqJAtY/.zln3yuCjmseI//640sO9mF1PpgBmWKwxkyPpbSCMFO', 1, 4, 11, 1),
+(16, 'Yaquelin Andrea', 'Melchor Perz', 'yaquelina02', '1andreamelchor@gmail.com', '$2y$10$OCC67N38leaV1WXgPDiQg.RBGLw10PpIiXJXmm5Z5dwpsKbcPonbO', 1, 1, 12, 1),
+(17, 'María Odete', 'Hernández Díaz', 'odeteh23', 'psic.odetehernandez@gmail.com', '$2y$10$Ol9oCE9/GCZewsKTV17fwecgNdyf4ETD5zeb2vDJ.m1A..h6QlBp.', 1, 2, 13, 1),
+(18, 'César Denilsson', 'Ciragua Morales', 'denilssonc26', 'ciraguacesar@gmail.com', '$2y$10$fRjoYlfJodCdQjkPOwayheA5u2j0vOGODbCIkJnhpOJUa.6UNURJC', 1, 1, 12, 1),
+(19, 'Jackeline Mishel', 'Ramírez Díaz', 'jackeliner02', 'djacky35@gmail.com', '$2y$10$5PGHyO9Igv4xaiPdobs3neJnWCsjeZ2cGOkCGD7vS0TXDcnd1ImGq', 1, 4, 14, 1),
+(20, 'Kevin Rubén', 'Alay Contreras', 'kevinr11', 'kevin_alay17@hotmail.com', '$2y$10$/3RY4Wx6cVr7DnGz1PGf3unCPayKC9hG5r/sZmZcnUzSccEpHYVMq', 1, 1, 15, 1);
 
 --
 -- Restricciones para tablas volcadas
@@ -2324,6 +2279,7 @@ ALTER TABLE `imagen`
 -- Filtros para la tabla `usuarios`
 --
 ALTER TABLE `usuarios`
+  ADD CONSTRAINT `usuarios-cargo` FOREIGN KEY (`F_cargo`) REFERENCES `cargo` (`id`) ON DELETE RESTRICT ON UPDATE RESTRICT,
   ADD CONSTRAINT `usuarios-rol` FOREIGN KEY (`F_rol`) REFERENCES `rol` (`id`);
 COMMIT;
 

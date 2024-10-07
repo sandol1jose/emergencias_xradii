@@ -79,7 +79,7 @@ function BuscarEmergencia(ActualizarImagenes){
                 }
 
                 Bonificacion = honorarios - hora_extra;
-                Bonificacion = Number(Bonificacion.toFixed(2));
+                Bonificacion = Number(Bonificacion.toFixed(3));
                 
 
                 //Pintamos la tabla de detalles
